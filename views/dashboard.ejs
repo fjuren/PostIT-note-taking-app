@@ -1,0 +1,23 @@
+<%- include('partials/header') %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4">Welcome, <%= user.firstName %></h1>
+      
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+          <h2 class="h4 mb-3">Your PostIT Dashboard</h2>
+          <p class="mb-4">Manage your PostIT notes and create new ones from here.</p>
+          
+          <div class="d-flex gap-2">
+            <a href="/notes" class="btn btn-outline-primary">View All Notes</a>
+            <a href="/notes#create" class="btn btn-primary">Create New Note</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,36 @@
+/* Add hover effect to cards */
+.hover-shadow {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .hover-shadow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  /* Override some Bootstrap defaults */
+  .btn-primary {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+  }
+  
+  .btn-primary:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+  }
+  
+  .text-primary {
+    color: #3b82f6 !important;
+  }
+  
+  /* Make sure images in the navbar don't distort */
+  .navbar img {
+    object-fit: cover;
+  }
+  
+  /* Add some padding to the bottom of the form for mobile */
+  @media (max-width: 576px) {
+    form {
+      padding-bottom: 1rem;
+    }
+  }
