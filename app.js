@@ -52,7 +52,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/', require('./routes/auth'));
+app.use('/', require('./routes/auth.routes'));
 app.use('/notes', require('./routes/notes.routes'));
 
 // Proceed to login screen if not already authed
