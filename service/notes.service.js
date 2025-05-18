@@ -8,11 +8,12 @@ const getAllUserNotes = async (user) => {
 
 // // /notes
 // // Creates a new note
-const createNote = async (title, content, user) => {
+const createNote = async (title, content, user, tagValues) => {
     return await Note.create({
       title,
       content,
-      user
+      user,
+      tag: tagValues
     });
 }
 

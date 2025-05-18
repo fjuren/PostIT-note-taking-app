@@ -10,6 +10,10 @@ const NoteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  tag: {
+    type: [String],
+    trim: true,
+  },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -22,7 +26,7 @@ const NoteSchema = new mongoose.Schema({
   updatedAt: {
     type: Date,
     default: Date.now
-  }
+  },
 });
 
 module.exports = mongoose.model('Note', NoteSchema);

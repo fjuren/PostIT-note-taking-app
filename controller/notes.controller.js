@@ -21,9 +21,11 @@ const getAllUserNotes = async (req, res) => {
 const createNote = async(req, res) => {
     try {
         const { title, content} = req.body;
+        const rawTags = req.body['input-custom-dropdown']
+        const tags = JSON.parse(rawTags)
+        const tagValues = tags.map(tag => tag.value)
         const user = req.user.id
-        // console.log('title', title, 'content', content, 'user', user)
-        await noteService.createNote(title, content, user)
+        await noteService.createNote(title, content, user, tagValues)
         res.redirect('/notes')
     } catch (err) {
         console.error(err);

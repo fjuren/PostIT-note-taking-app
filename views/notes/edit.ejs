@@ -14,6 +14,10 @@
           <label for="content" class="form-label">Content</label>
           <textarea class="form-control" id="content" name="content" rows="10" required><%= note.content %></textarea>
         </div>
+        <div class="mb-3">
+          <label for="tag" class="form-label">Tag</label>
+          <input name="input-custom-dropdown" class="tagify--custom-dropdown form-control" placeholder="Add tags" value="work, travel, school">
+        </div>
         <div class="d-flex gap-2">
           <button type="submit" class="btn btn-primary">Update Note</button>
           <a href="/notes" class="btn btn-outline-secondary">Cancel</a>
