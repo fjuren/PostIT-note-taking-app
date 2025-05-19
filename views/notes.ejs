@@ -16,16 +16,21 @@
               <div class="card-text mb-3">
                 <p><%= note.content.length > 100 ? note.content.substring(0, 100) + '...' : note.content %></p>
               </div>
+              <div>
+                <% note.tags.forEach(tag => { %>
+                  <span class="badge text-primary bg-primary bg-opacity-10 border-0"><%= tag %></span>
+                <% }) %>
+                </div>
             </div>
-            <div class="card-footer bg-white border-0 d-flex justify-content-between">
-              <a href="/notes/<%= note._id %>" class="btn btn-sm btn-outline-primary">Edit</a>
-              <form action="/notes/<%= note._id %>?_method=DELETE" method="POST">
-                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-              </form>
+              <div class="card-footer bg-white border-0 d-flex justify-content-between">
+                <a href="/notes/<%= note._id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+                <form action="/notes/<%= note._id %>?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-      <% }) %>
+          <% }) %>
     <% } else { %>
       <div class="col-12">
         <div class="alert alert-info">
@@ -48,8 +53,8 @@
           <textarea class="form-control" id="content" name="content" rows="6" required></textarea>
         </div>
         <div class="mb-3">
-          <label for="input-custom-dropdown" class="form-label">Tag</label>
-          <input name="input-custom-dropdown" class="tagify--custom-dropdown form-control" placeholder="Add tags" value="work, travel, school">
+          <label for="input-custom-dropdown" class="form-label">Tags</label>
+          <input name="input-custom-dropdown" class="tagify--custom-dropdown form-control" placeholder="Add tags" value="">
         </div>
         <button type="submit" class="btn btn-primary">Save Note</button>
       </form>

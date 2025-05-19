@@ -10,7 +10,7 @@ const NoteSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  tag: {
+  tags: {
     type: [String],
     trim: true,
   },

@@ -1,4 +1,5 @@
 const noteService = require('../service/notes.service')
+const miscHelpers = require('../utils/misc')
 
 // /notes
 // Gets all user notes
@@ -22,8 +23,7 @@ const createNote = async(req, res) => {
     try {
         const { title, content} = req.body;
         const rawTags = req.body['input-custom-dropdown']
-        const tags = JSON.parse(rawTags)
-        const tagValues = tags.map(tag => tag.value)
+        const tagValues = miscHelpers.getTagValues(rawTags)
         const user = req.user.id
         await noteService.createNote(title, content, user, tagValues)
         res.redirect('/notes')
@@ -67,7 +67,9 @@ const updateNote = async (req, res) => {
     const user = req.params.id
     const title = req.body.title
     const content = req.body.content
-    const note = await noteService.updateNote(user, title, content)
+    const rawTags = req.body['input-custom-dropdown']
+    const tagValues = miscHelpers.getTagValues(rawTags)
+    const note = await noteService.updateNote(user, title, content, tagValues)
     
     // Check if note exists
     if (!note) {
@@ -110,10 +112,23 @@ const deleteNote = async (req, res) => {
   }
 };
 
+// notes/tags
+// get tags from notes
+const getAllNoteTags = async (req, res) => {
+  try {
+    const user = req.user.id
+    const uniqueTags =  await noteService.getAllNoteTags(user)
+    res.json(uniqueTags)
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 module.exports = {
   getAllUserNotes,
   createNote,
   getUserNote,
   updateNote,
-  deleteNote
+  deleteNote,
+  getAllNoteTags
 };

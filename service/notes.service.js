@@ -13,7 +13,7 @@ const createNote = async (title, content, user, tagValues) => {
       title,
       content,
       user,
-      tag: tagValues
+      tags: tagValues
     });
 }
 
@@ -25,13 +25,14 @@ const getUserNote = async (user) => {
 
 // // /notes/id
 // // Update a note
-const updateNote = async (user, title, content) => {
+const updateNote = async (user, title, content, tagValues) => {
     let note = await Note.findById(user)
     note = await Note.findOneAndUpdate( 
         {_id: user},
         {
             title,
             content,
+            tags: tagValues,
             updateAt: Date.now()
         },
         { new: true }
@@ -47,10 +48,20 @@ const deleteNote = async (user) => {
     return note
 }
 
+// notes/tags
+// get tags from notes
+const getAllNoteTags = async (user) => {
+    const notes = await Note.find({ user }).select('tags');
+    const allTags = notes.flatMap(note => note.tags);
+    const uniqueTags = [...new Set(allTags)]; // only add unique tags to final array
+    return uniqueTags
+}
+
 module.exports = {
   getAllUserNotes,
   createNote,
   getUserNote,
   updateNote,
-  deleteNote
+  deleteNote,
+  getAllNoteTags
 };

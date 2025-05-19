@@ -8,6 +8,10 @@ const notesController = require('../controller/notes.controller');
 // Gets all user notes
 router.get('/', ensureAuth, notesController.getAllUserNotes);
 
+// notes/tags
+// get tags from notes
+router.get('/tags', ensureAuth, notesController.getAllNoteTags)
+
 // /notes
 // Creates a new note
 router.post('/', ensureAuth, notesController.createNote) 
@@ -23,5 +27,6 @@ router.put('/:id', ensureAuth, notesController.updateNote)
 // notes/:id
 // Delete a note
 router.delete('/:id', ensureAuth, notesController.deleteNote)
+
 
 module.exports = router;
