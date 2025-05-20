@@ -6,6 +6,12 @@ const getAllUserNotes = async (user) => {
     return await Note.find({ user }).sort({ updatedAt: 'desc' });
 }
 
+// notes
+// Gets all filtered notes
+const getFileredNotes = async (user, filters) => {
+    return await Note.find({user}).where('tags').in(filters);
+}
+
 // // /notes
 // // Creates a new note
 const createNote = async (title, content, user, tagValues) => {
@@ -59,6 +65,7 @@ const getAllNoteTags = async (user) => {
 
 module.exports = {
   getAllUserNotes,
+  getFileredNotes,
   createNote,
   getUserNote,
   updateNote,

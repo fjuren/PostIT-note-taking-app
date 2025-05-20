@@ -1,6 +1,6 @@
 // handles delete confirmation
 document.addEventListener('DOMContentLoaded', function() {
-    const deleteForms = document.querySelectorAll('form[action^="/notes/"]');
+    const deleteForms = document.querySelectorAll('form[action^="/notes/delete/"]');
     
     deleteForms.forEach(form => {
       form.addEventListener('submit', function(e) {
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   // fetch unique note tags; used for selecting previously created tags
-const getUniqueTags = async() => {
+  const getUniqueTags = async() => {
   const endpoint = '/notes/tags'
   try {
     const response = await fetch(endpoint)
@@ -48,3 +48,22 @@ var input = document.querySelector('input[name="input-custom-dropdown"]'),
 getUniqueTags().then(tags => {
   tagify.settings.whitelist = tags || [];
 });
+
+
+// For filtering (uses Choices library: https://github.com/Choices-js/Choices/tree/main for config)
+document.addEventListener('DOMContentLoaded', () => {
+  new Choices('#choices-multiple-remove-button', {
+    removeItemButton: true, // adds little 'x' to remove items
+    placeholderValue: 'Filter notes by category',
+    searchEnabled: true
+  });
+
+  // handles form submit each time filter option is changed
+  const form = document.getElementById('filterSearchForm')
+  const select = document.getElementById('choices-multiple-remove-button');
+  select.addEventListener('change', () => {
+    form.requestSubmit()
+  })
+});
+
+module.exports = { getUniqueTags };

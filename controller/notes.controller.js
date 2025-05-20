@@ -2,15 +2,31 @@ const noteService = require('../service/notes.service')
 const miscHelpers = require('../utils/misc')
 
 // /notes
-// Gets all user notes
+// Gets all user notes, includes filtering by tag categories
 const getAllUserNotes = async (req, res) => {
   try {
     const user = req.user.id
-    const notes = await noteService.getAllUserNotes(user)
-    res.render('notes', {
+    const filters = req.query.filter
+    const tags = await noteService.getAllNoteTags(user)
+    if(!filters) {
+      // all notes
+      const notes = await noteService.getAllUserNotes(user)
+      res.render('notes', {
+          user,
+          notes,
+          tags,
+          filters: [] // handles case where no filtesr are applied but still defines filters
+      })
+    } else {
+      // filtered notes
+      const notes = await noteService.getFileredNotes(user, filters)
+      res.render('notes', {
         user,
-        notes
-    })
+        notes,
+        tags,
+        filters
+      })
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
@@ -127,6 +143,7 @@ const getAllNoteTags = async (req, res) => {
 module.exports = {
   getAllUserNotes,
   createNote,
+  // filterNotesByTag,
   getUserNote,
   updateNote,
   deleteNote,

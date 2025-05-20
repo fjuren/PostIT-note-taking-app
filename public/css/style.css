@@ -67,3 +67,11 @@
     text-indent: -20px;
     border: 0;
 }
+
+/* overwrite some css for the filter section (component comes from the 'choices' library) */
+.choices {
+  margin: 0 !important;
+  flex: auto;
+  width: 1%;
+  background-color: #F3F3F3 !important;
+}

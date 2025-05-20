@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const { ensureAuth } = require('../middleware/auth');
-const Note = require('../models/Note');
 const notesController = require('../controller/notes.controller');
 
 // /notes
-// Gets all user notes
+// Gets all user notes, includes filtering by tag categories
 router.get('/', ensureAuth, notesController.getAllUserNotes);
 
 // notes/tags
@@ -26,7 +25,7 @@ router.put('/:id', ensureAuth, notesController.updateNote)
 
 // notes/:id
 // Delete a note
-router.delete('/:id', ensureAuth, notesController.deleteNote)
+router.delete('/delete/:id', ensureAuth, notesController.deleteNote)
 
 
 module.exports = router;
