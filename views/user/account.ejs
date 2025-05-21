@@ -1,0 +1,187 @@
+<%- include('../partials/header') %>
+<!-- TODO ASK MARTIN -->
+<%= console.log(user) %> <%= console.log(userProfile) %>
+
+<div class="container">
+  <div class="container">
+    <h1 class="h4">My Account</h1>
+
+    <!-- Profile Information Section -->
+    <div class="card shadow-sm border-0 mb-4" id="profile-info">
+      <div class="card-body p-4">
+        <h5 class="card-title mb-3">Personal Information</h5>
+        <form
+          action="/user/account/personal"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="firstName" class="form-label">First Name</label>
+                <input
+                  type="text"
+                  readonly
+                  class="form-control form-control-plaintext"
+                  id="firstName"
+                  name="firstName"
+                  value="<%- user.firstName %>"
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input
+                  type="text"
+                  readonly
+                  class="form-control form-control-plaintext"
+                  id="lastName"
+                  name="lastName"
+                  value="<%- user.lastName %>"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input
+              type="email"
+              readonly
+              class="form-control form-control-plaintext"
+              id="email"
+              name="email"
+              value="<%- user.email %>"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="displayName" class="form-label">Display Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="displayName"
+              name="displayName"
+              value="<%- userProfile.displayName %>"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="profileImage" class="form-label">Profile Image</label>
+            <input
+              type="file"
+              class="form-control"
+              id="profileImage"
+              name="profileImage"
+              accept="image/*"
+            />
+            <div class="mt-2" id="currentImage"></div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Member Since</label>
+                <input
+                  type="text"
+                  class="form-control form-control-plaintext"
+                  id="createdAt"
+                  readonly
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label class="form-label">Last Login</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastLogin"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Update Personal</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Preferences Section -->
+    <div class="card shadow-sm border-0 mb-5" id="preferences">
+      <div class="card-body p-4">
+        <h5 class="card-title mb-3">Preferences</h5>
+        <form action="/user/account/preferences" method="POST">
+          <!-- Display Preferences -->
+          <h6 class="mb-3">Display Settings</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="theme" class="form-label">Theme</label>
+                <select class="form-select" id="theme" name="theme">
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="fontSize" class="form-label">Font Size</label>
+                <select class="form-select" id="fontSize" name="fontSize">
+                  <option value="12">Small (12px)</option>
+                  <option value="14">Medium (14px)</option>
+                  <option value="16">Large (16px)</option>
+                  <option value="18">Extra Large (18px)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="fontFamily" class="form-label">Font Family</label>
+                <select class="form-select" id="fontFamily" name="fontFamily">
+                  <option value="Arial">Arial</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Regional Preferences -->
+          <h6 class="mb-3">Regional Settings</h6>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="timezone" class="form-label">Timezone</label>
+                <select class="form-select" id="timezone" name="timezone">
+                  <option value="">Select Timezone</option>
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="dateFormat" class="form-label">Date Format</label>
+                <select class="form-select" id="dateFormat" name="dateFormat">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            Save Preferences
+          </button>
+          <button type="button" class="btn btn-outline-secondary">
+            Reset to Defaults
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

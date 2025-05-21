@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// meant to store private user data only
 const UserSchema = new mongoose.Schema({
   googleId: {
     type: String,

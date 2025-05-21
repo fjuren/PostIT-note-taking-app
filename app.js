@@ -57,6 +57,7 @@ app.use(passport.session());
 // Routes
 app.use('/', require('./routes/auth.routes'));
 app.use('/notes', require('./routes/notes.routes'));
+app.use('/user', require('./routes/user.routes'));
 
 // Proceed to login screen if not already authed
 app.get('/', ensureGuest, (req, res) => {

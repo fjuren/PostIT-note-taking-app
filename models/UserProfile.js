@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 
+// meant to store 'non-private'user data only
 const UserProfileSchema = new mongoose.Schema({
-  displayName: String,
+  displayName: { type: String },
+  avatar: { type: String },
   preferences: {
     fontSize: { type: Number, default: 16 },
     fontColor: { type: String, default: '#000000' },
