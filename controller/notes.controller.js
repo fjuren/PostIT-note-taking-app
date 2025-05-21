@@ -5,12 +5,13 @@ const miscHelpers = require('../utils/misc');
 // Gets all user notes, includes filtering by tag categories
 const getAllUserNotes = async (req, res) => {
   try {
-    const user = req.user.id;
+    const userId = req.user.id;
+    const user = req.user;
     const filters = req.query.filter;
-    const tags = await noteService.getAllNoteTags(user);
+    const tags = await noteService.getAllNoteTags(userId);
     if (!filters) {
       // all notes
-      const notes = await noteService.getAllUserNotes(user);
+      const notes = await noteService.getAllUserNotes(userId);
       res.render('notes', {
         user,
         notes,
@@ -19,7 +20,7 @@ const getAllUserNotes = async (req, res) => {
       });
     } else {
       // filtered notes
-      const notes = await noteService.getFileredNotes(user, filters);
+      const notes = await noteService.getFileredNotes(userId, filters);
       res.render('notes', {
         user,
         notes,
@@ -46,8 +47,8 @@ const createNote = async (req, res) => {
     const { title, content } = req.body;
     const rawTags = req.body['input-custom-dropdown'];
     const tagValues = miscHelpers.getTagValues(rawTags);
-    const user = req.user.id;
-    await noteService.createNote(title, content, user, tagValues);
+    const userId = req.user.id;
+    await noteService.createNote(title, content, userId, tagValues);
     res.redirect('/notes');
   } catch (err) {
     console.error(err);
@@ -59,9 +60,9 @@ const createNote = async (req, res) => {
 // // Get a single note for editing
 const getUserNote = async (req, res) => {
   try {
-    const user = req.params.id;
-    const note = await noteService.getUserNote(user);
-
+    const noteId = req.params.id;
+    const note = await noteService.getUserNote(noteId);
+    const user = req.user;
     // Check if note exists
     if (!note) {
       return res.redirect('/notes');
@@ -73,7 +74,7 @@ const getUserNote = async (req, res) => {
     }
 
     res.render('notes/edit', {
-      user: req.user,
+      user,
       note,
     });
   } catch (err) {
@@ -86,12 +87,17 @@ const getUserNote = async (req, res) => {
 // // Update a note
 const updateNote = async (req, res) => {
   try {
-    const user = req.params.id;
+    const noteId = req.params.id;
     const title = req.body.title;
     const content = req.body.content;
     const rawTags = req.body['input-custom-dropdown'];
     const tagValues = miscHelpers.getTagValues(rawTags);
-    const note = await noteService.updateNote(user, title, content, tagValues);
+    const note = await noteService.updateNote(
+      noteId,
+      title,
+      content,
+      tagValues
+    );
 
     // Check if note exists
     if (!note) {
@@ -115,8 +121,8 @@ const updateNote = async (req, res) => {
 // // Delete a note
 const deleteNote = async (req, res) => {
   try {
-    const user = req.params.id;
-    let note = await noteService.deleteNote(user);
+    const noteId = req.params.id;
+    let note = await noteService.deleteNote(noteId);
 
     // Check if note exists
     if (!note) {
@@ -138,8 +144,8 @@ const deleteNote = async (req, res) => {
 // get tags from notes
 const getAllNoteTags = async (req, res) => {
   try {
-    const user = req.user.id;
-    const uniqueTags = await noteService.getAllNoteTags(user);
+    const userId = req.user.id;
+    const uniqueTags = await noteService.getAllNoteTags(userId);
     res.json(uniqueTags);
   } catch (err) {
     console.error(err);

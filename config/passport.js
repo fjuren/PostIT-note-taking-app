@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
+const UserProfile = require('../models/UserProfile');
 
 passport.use(
   new GoogleStrategy(
@@ -17,14 +18,17 @@ passport.use(
         if (user) {
           done(null, user);
         } else {
+          const userProfile = await UserProfile.create({
+            displayName: '', // other userProfile fields (like preferences) all have default values. Ommitting their definition here
+          });
           // Create new user
           user = await User.create({
             googleId: profile.id,
-            displayName: profile.displayName,
             firstName: profile.name.givenName,
             lastName: profile.name.familyName,
             email: profile.emails[0].value,
-            image: profile.photos[0].value
+            image: profile.photos[0].value,
+            userProfile: userProfile._id,
           });
           done(null, user);
         }

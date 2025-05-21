@@ -2,66 +2,66 @@ const Note = require('../models/Note');
 
 // /notes
 // Gets all user notes
-const getAllUserNotes = async (user) => {
-    return await Note.find({ user }).sort({ updatedAt: 'desc' });
-}
+const getAllUserNotes = async (userId) => {
+  return await Note.find({ user: userId }).sort({ updatedAt: 'desc' });
+};
 
 // notes
 // Gets all filtered notes
-const getFileredNotes = async (user, filters) => {
-    return await Note.find({user}).where('tags').in(filters);
-}
+const getFileredNotes = async (userId, filters) => {
+  return await Note.find({ user: userId }).where('tags').in(filters);
+};
 
 // // /notes
 // // Creates a new note
-const createNote = async (title, content, user, tagValues) => {
-    return await Note.create({
-      title,
-      content,
-      user,
-      tags: tagValues
-    });
-}
+const createNote = async (title, content, userId, tagValues) => {
+  return await Note.create({
+    title,
+    content,
+    user: userId,
+    tags: tagValues,
+  });
+};
 
 // // /notes/:id
 // // Get a single note for editing
-const getUserNote = async (user) => {
-    return await Note.findById(user);
-}
+const getUserNote = async (noteId) => {
+  return await Note.findById(noteId);
+};
 
 // // /notes/id
 // // Update a note
-const updateNote = async (user, title, content, tagValues) => {
-    let note = await Note.findById(user)
-    note = await Note.findOneAndUpdate( 
-        {_id: user},
-        {
-            title,
-            content,
-            tags: tagValues,
-            updateAt: Date.now()
-        },
-        { new: true }
-    )
-    return note
-}
+const updateNote = async (noteId, title, content, tagValues) => {
+  let note = await Note.findById(noteId);
+  note = await Note.findOneAndUpdate(
+    { _id: noteId },
+    {
+      title,
+      content,
+      tags: tagValues,
+      updateAt: Date.now(),
+    },
+    { new: true }
+  );
+  return note;
+};
 
 // // notes/:id
 // // Delete a note
-const deleteNote = async (user) => {
-    let note = await Note.findById(user)
-    note = await Note.deleteOne({ _id: user });
-    return note
-}
+const deleteNote = async (noteId) => {
+  let note = await Note.findById(noteId);
+  note = await Note.deleteOne({ _id: noteId });
+  return note;
+};
 
 // notes/tags
 // get tags from notes
-const getAllNoteTags = async (user) => {
-    const notes = await Note.find({ user }).select('tags');
-    const allTags = notes.flatMap(note => note.tags);
-    const uniqueTags = [...new Set(allTags)]; // only add unique tags to final array
-    return uniqueTags
-}
+const getAllNoteTags = async (userId) => {
+  const notes = await Note.find({ user: userId }).select('tags');
+  const allTags = notes.flatMap((note) => note.tags);
+  const uniqueTags = [...new Set(allTags)]; // only add unique tags to final array
+  return uniqueTags;
+};
 
 module.exports = {
   getAllUserNotes,
@@ -70,5 +70,5 @@ module.exports = {
   getUserNote,
   updateNote,
   deleteNote,
-  getAllNoteTags
+  getAllNoteTags,
 };
