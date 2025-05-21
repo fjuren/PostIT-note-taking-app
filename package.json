@@ -1,5 +1,6 @@
 {
   "name": "postit",
+  "author": "Fabian Juren",
   "version": "1.0.0",
   "description": "A note-taking web app called 'PostIt'",
   "main": "app.js",
