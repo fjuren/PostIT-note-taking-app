@@ -63,3 +63,24 @@ document.addEventListener('DOMContentLoaded', () => {
     form.requestSubmit();
   });
 });
+
+// toggle dark mode
+const toggleTheme = () => {
+  const html = document.querySelector('html');
+  const currentTheme = html.getAttribute('data-bs-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+  // Set the new theme
+  html.setAttribute('data-bs-theme', newTheme);
+
+  // Optional: Save to localStorage so the preference persists
+  localStorage.setItem('preferred-theme', newTheme);
+};
+
+// Initialize theme from localStorage on page load
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('preferred-theme');
+  if (savedTheme) {
+    document.querySelector('html').setAttribute('data-bs-theme', savedTheme);
+  }
+});
