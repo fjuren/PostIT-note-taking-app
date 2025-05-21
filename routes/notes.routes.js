@@ -7,25 +7,28 @@ const notesController = require('../controller/notes.controller');
 // Gets all user notes, includes filtering by tag categories
 router.get('/', ensureAuth, notesController.getAllUserNotes);
 
+// /notes/create
+// renders the note creation page
+router.get('/create', ensureAuth, notesController.renderCreateNotePage);
+
 // notes/tags
 // get tags from notes
-router.get('/tags', ensureAuth, notesController.getAllNoteTags)
+router.get('/tags', ensureAuth, notesController.getAllNoteTags);
 
 // /notes
 // Creates a new note
-router.post('/', ensureAuth, notesController.createNote) 
+router.post('/', ensureAuth, notesController.createNote);
 
 // /notes/:id
 // Get a single note for editing
-router.get('/:id', ensureAuth, notesController.getUserNote)
+router.get('/:id', ensureAuth, notesController.getUserNote);
 
 // /notes/id
 // Update a note
-router.put('/:id', ensureAuth, notesController.updateNote)
+router.put('/:id', ensureAuth, notesController.updateNote);
 
 // notes/:id
 // Delete a note
-router.delete('/delete/:id', ensureAuth, notesController.deleteNote)
-
+router.delete('/delete/:id', ensureAuth, notesController.deleteNote);
 
 module.exports = router;

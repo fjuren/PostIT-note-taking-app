@@ -15,9 +15,10 @@ dotenv.config();
 require('./config/passport');
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI)
+mongoose
+  .connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err));
 
 // create express server
 const app = express();
@@ -37,15 +38,17 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Sessions
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  store: MongoStore.create({ 
-    mongoUrl: process.env.MONGODB_URI 
-  }),
-  cookie: { secure: process.env.NODE_ENV === 'production' }
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+    }),
+    cookie: { secure: process.env.NODE_ENV === 'production' },
+  })
+);
 
 // Passport
 app.use(passport.initialize());
