@@ -12,20 +12,43 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        // Check if user already exists
         let user = await User.findOne({ googleId: profile.id });
-
+        
+        // Checking if user already exists. If yes, update fields to most recent from provider
         if (user) {
+          user = await User.findOneAndUpdate(
+            { googleId: profile.id },
+            {
+              $set: {
+                name: {
+                  firstName: profile.name.givenName,
+                  lastName: profile.name.familyName || '',
+                },
+                email: profile.emails[0].value,
+                image: profile.photos[0].value,
+              },
+            },
+            { new: true }
+          );
+
+          await UserProfile.findOneAndUpdate(
+            { _id: user.userProfile },
+            { $set: { lastLogin: new Date() } },
+            { new: true }
+          );
           done(null, user);
         } else {
           const userProfile = await UserProfile.create({
-            displayName: '', // other userProfile fields (like preferences) all have default values. Ommitting their definition here
+            displayName: profile.displayName || profile.name.givenName , 
+          // other default fields handled by schema          
           });
-          // Create new user
-          user = await User.create({
+            // Create new user with linked userProfile
+            user = await User.create({
             googleId: profile.id,
-            firstName: profile.name.givenName,
-            lastName: profile.name.familyName,
+            name: {
+              firstName: profile.name.givenName,
+              lastName: profile.name.familyName || '',
+            },
             email: profile.emails[0].value,
             image: profile.photos[0].value,
             userProfile: userProfile._id,
