@@ -1,0 +1,44 @@
+{
+  "fontSizes": [
+    { "value": "0.75", "label": "Small (12px)" },
+    { "value": "0.875", "label": "Normal (14px)" },
+    { "value": "1", "label": "Medium (16px)" },
+    { "value": "1.125", "label": "Large (18px)" },
+    { "value": "1.25", "label": "Extra Large (20px)" }
+  ],
+  "fontFamilies": [
+    { "value": "system-ui", "label": "System Default" },
+    { "value": "'Inter', sans-serif", "label": "Inter" },
+    { "value": "'Roboto', sans-serif", "label": "Roboto" },
+    { "value": "'Helvetica Neue', sans-serif", "label": "Helvetica Neue" },
+    { "value": "'Segoe UI', sans-serif", "label": "Segoe UI" },
+    { "value": "'Georgia', serif", "label": "Georgia" },
+    { "value": "'Arial', sans-serif", "label": "Arial" },
+    { "value": "'Times New Roman', serif", "label": "Times New Roman" }
+  ],
+  "dateFormats": [
+    { "label": "MM/DD/YYYY (e.g. 04/27/2025)", "value": "MM/DD/YYYY" },
+    { "label": "DD/MM/YYYY (e.g. 27/04/2025)", "value": "DD/MM/YYYY" },
+    { "label": "YYYY-MM-DD (e.g. 2025-04-27)", "value": "YYYY-MM-DD" },
+    { "label": "MMMM D, YYYY (e.g. April 27, 2025)", "value": "MMMM D, YYYY" },
+    { "label": "D MMM YYYY (e.g. 27 Apr 2025)", "value": "D MMM YYYY" },
+    { "label": "Do MMMM YYYY (e.g. 27th April 2025)", "value": "Do MMMM YYYY" }
+  ],
+  "timeZones": [
+    { "label": "UTC", "value": "UTC" },
+    { "label": "Eastern Time (US & Canada)", "value": "America/New_York" },
+    { "label": "Central Time (US & Canada)", "value": "America/Chicago" },
+    { "label": "Mountain Time (US & Canada)", "value": "America/Denver" },
+    { "label": "Pacific Time (US & Canada)", "value": "America/Los_Angeles" },
+    { "label": "London, United Kingdom", "value": "Europe/London" },
+    { "label": "Paris, France", "value": "Europe/Paris" },
+    { "label": "Berlin, Germany", "value": "Europe/Berlin" },
+    { "label": "Tokyo, Japan", "value": "Asia/Tokyo" },
+    { "label": "Shanghai, China", "value": "Asia/Shanghai" },
+    { "label": "Kolkata, India", "value": "Asia/Kolkata" },
+    { "label": "Sydney, Australia", "value": "Australia/Sydney" },
+    { "label": "São Paulo, Brazil", "value": "America/Sao_Paulo" },
+    { "label": "Johannesburg, South Africa", "value": "Africa/Johannesburg" },
+    { "label": "Auckland, New Zealand", "value": "Pacific/Auckland" }
+  ]
+}

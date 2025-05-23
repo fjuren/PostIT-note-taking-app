@@ -1,5 +1,9 @@
 /* FYI colors are using default bootstrap colors. See docs: https://getbootstrap.com/docs/5.3/customize/color-modes/#variables */
 :root {
+  /* default font-sizing/font-family from bootstrap */
+  --user-font-size: 1rem;
+  --user-font-family: 'system-ui', sans-serif;
+
   /* override default bootstrap colors */
   --color-primary: #9b5de5;
   --color-primary-hover: #7a3bd4;
@@ -40,6 +44,26 @@
 }
 
 /* Override some of Bootstrap defaults */
+body {
+  font-size: var(--user-font-size);
+  font-family: var(--user-font-family, system-ui), sans-serif;
+}
+input,
+textarea,
+select,
+button {
+  font-size: inherit !important;
+  font-family: inherit !important;
+}
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-size: inherit !important;
+}
+
 .text-primary,
 .bg-primary {
   color: var(--color-primary) !important;
@@ -52,8 +76,15 @@
 }
 
 .btn.btn-primary:hover {
-  background-color: var(--color-primary-hover) !important;
-  border-color: var(--color-primary-hover) !important;
+  background-color: var(
+    --color-primary
+  ) !important; /* workaround: not adding var(--color-primary-hover) to simplify color selection preferences */
+  border-color: var(
+    --color-primary
+  ) !important; /* workaround: not adding var(--color-primary-hover) to simplify color selection preferences */
+  filter: brightness(
+    1.2
+  ); /* workaround: not adding var(--color-primary-hover) to simplify color selection preferences */
   color: white !important;
 }
 
@@ -63,7 +94,15 @@
 }
 
 .btn.btn-outline-primary:hover {
-  background-color: var(--color-primary-hover) !important;
+  background-color: var(
+    --color-primary
+  ) !important; /* workaround: not adding var(--color-primary-hover) to simplify color selection preferences */
+  border-color: var(
+    --color-primary
+  ) !important; /* workaround: not adding var(--color-primary-hover) to simplify color selection preferences */
+  filter: brightness(
+    1.2
+  ); /* workaround: not adding var(--color-primary-hover) to simplify color selection preferences */
   color: white !important;
 }
 

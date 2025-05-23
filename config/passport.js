@@ -13,7 +13,7 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         let user = await User.findOne({ googleId: profile.id });
-        
+
         // Checking if user already exists. If yes, update fields to most recent from provider
         if (user) {
           user = await User.findOneAndUpdate(
@@ -31,19 +31,35 @@ passport.use(
             { new: true }
           );
 
+          // getting defaults from userProfile schema;
+          const userProfile = await UserProfile.findById(user.userProfile);
+          // Merge existing preferences with schema defaults
+          const tempProfile = new UserProfile(); // gets defaults
+          const defaultPreferences = tempProfile.preferences || {};
+          const existingPreferences = userProfile.preferences || {};
+          const mergedPreferences = {
+            ...defaultPreferences,
+            ...existingPreferences,
+          };
+
           await UserProfile.findOneAndUpdate(
             { _id: user.userProfile },
-            { $set: { lastLogin: new Date() } },
+            {
+              $set: {
+                displayName: profile.displayName || profile.name.givenName,
+                preferences: mergedPreferences,
+                lastLogin: new Date(),
+              },
+            },
             { new: true }
           );
           done(null, user);
         } else {
           const userProfile = await UserProfile.create({
-            displayName: profile.displayName || profile.name.givenName , 
-          // other default fields handled by schema          
+            displayName: profile.displayName || profile.name.givenName,
           });
-            // Create new user with linked userProfile
-            user = await User.create({
+          // Create new user with linked userProfile
+          user = await User.create({
             googleId: profile.id,
             name: {
               firstName: profile.name.givenName,
@@ -71,7 +87,7 @@ passport.serializeUser((user, done) => {
 // Deserialize user
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate('userProfile');
     done(null, user);
   } catch (err) {
     done(err, null);

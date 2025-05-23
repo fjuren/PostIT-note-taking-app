@@ -84,3 +84,42 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('html').setAttribute('data-bs-theme', savedTheme);
   }
 });
+
+// user Preferences (display)
+
+document.addEventListener('DOMContentLoaded', () => {
+  // ---- theme ----
+  const theme = window.__USER_PREFERENCES__.theme;
+  document.querySelector('html').setAttribute('data-bs-theme', theme);
+
+  // ---- Primary color ----
+  const primaryColor = window.__USER_PREFERENCES__.primaryColor;
+  document.documentElement.style.setProperty('--color-primary', primaryColor);
+  // hover states (e.g. for buttons)
+  // See CSS btn-primary:hover btn-outline-primary:hover for explanation
+
+  // reset primary color button on account page
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultColor = '#9b5de5';
+    const colorInput = document.getElementById('primaryColor');
+    const resetButton = document.getElementById('resetColorBtn');
+
+    resetButton.addEventListener('click', () => {
+      colorInput.value = defaultColor;
+    });
+  });
+
+  // ---- font size ----
+  const fontSize = window.__USER_PREFERENCES__.fontSize || 1;
+  document.documentElement.style.setProperty(
+    '--user-font-size',
+    fontSize + 'rem'
+  );
+
+  // ---- font family ----
+  const fontFamily = window.__USER_PREFERENCES__.fontFamily || 'system-ui';
+  document.documentElement.style.setProperty('--user-font-family', fontFamily);
+  // ---- Timezone ----
+
+  // ---- Date Format ----
+});

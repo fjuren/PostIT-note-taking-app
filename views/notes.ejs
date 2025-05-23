@@ -83,14 +83,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
-                    <div class="card-text mb-3">
-                      <p><%= note.content %></p>
+                    <div class="card-text mb-3" style="white-space: pre-wrap;">
+                      <%=  note.content %>
                     </div>
                     <div>
-                      <% note.tags.forEach(tag => { %>
-                        <span class="badge text-primary bg-primary bg-opacity-10 border-0"><%= tag %></span>
-                      <% }) %>
-                      </div>
+                    <% note.tags.forEach(tag => { %>
+                      <span class="badge text-primary bg-primary bg-opacity-10 border-0"><%= tag %></span>
+                    <% }) %>
+                    </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>

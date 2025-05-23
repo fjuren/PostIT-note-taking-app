@@ -1,170 +1,196 @@
 <%- include('../partials/header') %>
-<!-- TODO ASK MARTIN -->
-<%= console.log("userWithProfile", userWithProfile) %>
 
-    <div class="container pb-3">
-        <h1 class="h4">My Account</h1>
-        <div class="card shadow-sm border-0 mb-4" id="profile-info">
-            <div class="card-body p-4">
-                <h3 class="card-title mb-3">Profile</h3>
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-lg-6">
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input
-                                type="email"
-                                readonly
-                                class="form-control form-control-plaintext"
-                                id="email"
-                                name="email"
-                                value="<%- userWithProfile.email %>"
-                            />
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-lg-6">
-                        <div class="mb-3">
-                            <label class="form-label">Member Since</label>
-                            <input
-                                type="text"
-                                readonly
-                                class="form-control form-control-plaintext"
-                                id="createdAt"
-                                value="<%= new Date(userWithProfile.createdAt).toLocaleDateString('en-US', { 
+<div class="container pb-3">
+  <h1 class="h4">My Account</h1>
+  <div class="card shadow-sm border-0 mb-4" id="profile-info">
+    <div class="card-body p-4">
+      <h3 class="card-title mb-3">Profile</h3>
+      <div class="row">
+        <div class="col-12 col-sm-12 col-lg-6">
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input
+              type="email"
+              readonly
+              class="form-control form-control-plaintext"
+              id="email"
+              name="email"
+              value="<%- userWithProfile.email %>"
+            />
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-6">
+          <div class="mb-3">
+            <label class="form-label">Member Since</label>
+            <input
+              type="text"
+              readonly
+              class="form-control form-control-plaintext"
+              id="createdAt"
+              value="<%= new Date(userWithProfile.createdAt).toLocaleDateString('en-US', { 
                                   year: 'numeric', 
                                   month: 'long', 
                                   day: 'numeric' 
                               }) %>"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
+            />
+          </div>
         </div>
-        
-        <div class="card shadow-sm border-0 mb-5" id="preferences">
-            <div class="card-body p-4">
-                <h3 class="card-title mb-3">Preferences</h3>
-                <form action="/user/account/preferences" method="POST">
-                    
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-12">
-                            <div class="mb-3">
-                                <label for="displayName" class="form-label">Display Name</label>
-                                <!-- value: taking the user firstName lastName from google auth if a display name hasn't been defined yet. Once display name updated, it'll use that name -->
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="displayName"
-                                    name="displayName"
-                                    value="<%= userWithProfile.userProfile?.displayName %>"/>
-                                  </div>
-                        </div>
-                    </div>
-                    
-                    <h6 class="mb-3">Display Settings</h6>
-                    <div class="row">
-                        <div class="col-12 col-sm-6 col-md-6">
-                            <div class="mb-3">
-                                <label for="theme" class="form-label">Theme</label>
-                                <select class="form-select" id="theme" name="theme">
-                                    <option value="light">Light</option>
-                                    <option value="dark">Dark</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6">
-                            <div class="mb-3">
-                                <label for="primaryColor" class="form-label">Primary Color</label>
-                                <!-- Do not delete the hidden input below. This allows the following input to work correctly, rendering the primary color correctly. There's a bizarre css conflict with Bootstrap that happening, but this hack somehow works..
-                                Added the id 'ignoreThisInput' to prevent possible errors with the form handling-->
-                                <input hidden type="color" id="ignoreThisInput" value="<%- userWithProfile.userProfile?.preferences.primaryColor %>">
-                                <input
-                                  type="color"
-                                  class="form-control form-control-color"
-                                  id="primaryColor"
-                                  name="primaryColor"
-                                  value="<%- userWithProfile.userProfile?.preferences.primaryColor %>">
-                              </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-12 col-sm-6 col-md-6">
-                            <div class="mb-3">
-                                <label for="fontSize" class="form-label">Font Size</label>
-                                <select class="form-select" id="fontSize" name="fontSize">
-                                    <option value="12">Small (12px)</option>
-                                    <option value="14">Medium (14px)</option>
-                                    <option value="16">Large (16px)</option>
-                                    <option value="18">Extra Large (18px)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6">
-                            <div class="mb-3">
-                                <label for="fontFamily" class="form-label">Font Family</label>
-                                <select class="form-select" id="fontFamily" name="fontFamily">
-                                    <option value="Arial">Arial</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h6 class="mb-3">Regional Settings</h6>
-                    <div class="row">
-                        <div class="col-12 col-sm-6 col-md-6">
-                            <div class="mb-3">
-                                <label for="timezone" class="form-label">Timezone</label>
-                                <select class="form-select" id="timezone" name="timezone">
-                                    <option value="">Select Timezone</option>
-                                    <option value=""></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-md-6">
-                            <div class="mb-3">
-                                <label for="dateFormat" class="form-label">Date Format</label>
-                                <select class="form-select" id="dateFormat" name="dateFormat">
-                                    <option value=""></option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">
-                        Save Preferences
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary ms-2">
-                        Reset to Defaults
-                    </button>
-                </form>
-            </div>
-        </div>
-        
-        <!-- Account (download data / delete account) -->
-        <div class="card shadow-sm border-0 mb-5" id="account">
-            <div class="card-body p-4">
-                <h3 class="card-title mb-3">Account</h3>
-                <div class="row">
-                    <div class="col-12 col-sm-6 col-md-6">
-                        <div class="mb-3">
-                            <button type="button" class="btn btn-outline-secondary">
-                                Download Data
-                            </button>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-md-6">
-                        <div class="mb-3">
-                            <form action="/user/account/" method="POST" style="display: inline;">
-                                <button type="submit" class="btn btn-danger">
-                                    Delete Account
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="card shadow-sm border-0 mb-5" id="preferences">
+    <div class="card-body p-4">
+      <h3 class="card-title mb-3">Preferences</h3>
+      <form action="/user/account/preferences?_method=PUT" method="POST">
+        <div class="row">
+          <div class="col-12 col-sm-12 col-md-12">
+            <div class="mb-3">
+              <label for="displayName" class="form-label">Display Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="displayName"
+                name="displayName"
+                value="<%= userWithProfile.userProfile?.displayName %>"
+              />
+            </div>
+          </div>
+        </div>
+
+        <h6 class="mb-3">Display Settings</h6>
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="mb-3">
+              <label for="theme" class="form-label">Theme</label>
+              <select class="form-select" id="theme" name="theme">
+                <option value="light"
+                <%- userWithProfile.userProfile?.preferences.theme == 'light' ? 'selected' : '' %>>
+                Light</option>
+                <option value="dark" 
+                <%- userWithProfile.userProfile?.preferences.theme == 'dark' ? 'selected' : '' %>
+                >Dark</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="mb-3">
+              <label for="primaryColor" class="form-label">Primary Color</label>
+              <!-- Do not delete the hidden input below. This allows the following input to work correctly, rendering the primary color correctly. There's a bizarre css conflict with Bootstrap that happening, but this hack somehow works..
+                                Added the id 'ignoreThisInput' to prevent possible errors with the form handling-->
+              <input
+                hidden
+                type="color"
+                id="ignoreThisInput"
+                value="<%- userWithProfile.userProfile?.preferences.primaryColor %>"
+              />
+              <div class="d-flex gap-2">                
+                <input
+                  type="color"
+                  class="form-control form-control-color"
+                  id="primaryColor"
+                  name="primaryColor"
+                  value="<%- userWithProfile.userProfile?.preferences.primaryColor %>"
+                />
+                <button type="button" class="btn btn-outline-secondary" id="resetColorBtn">Reset Color</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="mb-3">
+              <label for="fontSize" class="form-label">Font Size</label>
+              <select
+                class="form-select"
+                id="fontSize"
+                name="fontSize"
+              >
+                <% constants.fontSizes.forEach(size => { %>
+                  <option value="<%= size.value %>" 
+                    <%- userWithProfile.userProfile?.preferences.fontSize == size.value ? 'selected' : '' %>>
+                    <%= size.label %>
+                  </option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="mb-3">
+              <label for="fontFamily" class="form-label">Font Family</label>
+              <select class="form-select" id="fontFamily" name="fontFamily">
+                <% constants.fontFamilies.forEach(family => { %>
+                  <option value="<%= family.value %>" 
+                    <%- userWithProfile.userProfile?.preferences.fontFamily == family.value ? 'selected' : '' %>>
+                    <%= family.label %>
+                  </option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <h6 class="mb-3">Regional Settings</h6>
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="mb-3">
+              <label for="timeZone" class="form-label">Timezone</label>
+              <select class="form-select" id="timeZone" name="timeZone">
+                  <% constants.timeZones.forEach(zone => { %>
+                    <option value="<%= zone.value %>" 
+                      <%- userWithProfile.userProfile?.preferences.timeZone == zone.value ? 'selected' : '' %>
+                      ><%= zone.label %></option>
+                  <% }); %>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-sm-6 col-md-6">
+            <div class="mb-3">
+              <label for="dateFormat" class="form-label">Date Format</label>
+              <select class="form-select" id="dateFormat" name="dateFormat">
+                  <% constants.dateFormats.forEach(format => { %>
+                    <option value="<%= format.value %>"
+                      <%- userWithProfile.userProfile?.preferences.dateFormat == format.value ? 'selected' : '' %>
+                      ><%= format.label %></option>
+                  <% }); %>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Preferences</button>
+        <button type="button" class="btn btn-outline-secondary ms-2">
+          Reset to Defaults
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Account (download data / delete account) -->
+  <div class="card shadow-sm border-0 mb-5" id="account">
+    <div class="card-body p-4">
+      <h3 class="card-title mb-3">Account</h3>
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-6">
+          <div class="mb-3">
+            <button type="button" class="btn btn-outline-secondary">
+              Download Data
+            </button>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6">
+          <div class="mb-3">
+            <form action="/user/account/" method="POST" style="display: inline">
+              <button type="submit" class="btn btn-danger">
+                Delete Account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <%- include('../partials/footer') %>
