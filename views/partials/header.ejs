@@ -34,18 +34,25 @@
       href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
       rel="stylesheet"
     />
-    <!-- custom css from /public/css/style.css -->
+      <script>
+        (function () {
+          // ignore js ide warning; irrelevant
+          const prefs = <%- JSON.stringify(user?.userProfile?.preferences || { theme: 'light', fontSize: 1, primaryColor: '#9b5de5' , fontFamily: 'system-ui', timeZone: 'UTC', dateFormat: 'YYYY-MM-DD'}) %>;
+          window.__USER_PREFERENCES__ = prefs;
+          document.documentElement.setAttribute('data-bs-theme', prefs.theme);
+          document.documentElement.style.setProperty('--user-font-size', prefs.fontSize + 'rem');
+          document.documentElement.style.setProperty('--color-primary', prefs.primaryColor);
+          document.documentElement.style.setProperty('--user-font-family', prefs.fontFamily);
+        })();
+      </script>
     <link rel="stylesheet" href="/css/style.css" />
-    <script>
-      window.__USER_PREFERENCES__ = <%- JSON.stringify(user.userProfile?.preferences || { fontSize: 1,  fontFamily: 'system-ui'}) %>
-    </script>
     <script src="/js/main.js" defer></script>
   </head>
   <body class="pt-4">
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm fixed-top">
         <div class="container">
-          <a class="navbar-brand" href="/">
+          <a class="navbar-brand" href="/" onclick="showSpinner()">
             <h1 class="h4 m-0 text-primary">PostIT</h1>
           </a>
           <% if(typeof user !== 'undefined') { %>
@@ -69,10 +76,10 @@
                 </button>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/dashboard">Dashboard</a>
+                <a class="nav-link" href="/dashboard" onclick="showSpinner()">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/notes">Notes</a>
+                <a class="nav-link" href="/notes" onclick="showSpinner()">Notes</a>
               </li>
               <li class="nav-item dropdown">
                 <a
@@ -92,10 +99,10 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
-                    <a href="/user/account" class="dropdown-item">Account</a>
+                    <a href="/user/account" class="dropdown-item" onclick="showSpinner()">Account</a>
                   </li>
                   <li>
-                    <a href="/auth/logout" class="dropdown-item">Logout</a>
+                    <a href="/auth/logout" class="dropdown-item" onclick="showSpinner()">Logout</a>
                   </li>
                 </ul>
               </li>
@@ -115,6 +122,8 @@
         </div>
       </nav>
     </header>
-    <main class="py-4"></main>
+    <main class="py-4">
+      <%- include('../partials/spinner') %>
+    </main>
   </body>
 </html>

@@ -17,12 +17,12 @@
     { "value": "'Times New Roman', serif", "label": "Times New Roman" }
   ],
   "dateFormats": [
-    { "label": "MM/DD/YYYY (e.g. 04/27/2025)", "value": "MM/DD/YYYY" },
-    { "label": "DD/MM/YYYY (e.g. 27/04/2025)", "value": "DD/MM/YYYY" },
-    { "label": "YYYY-MM-DD (e.g. 2025-04-27)", "value": "YYYY-MM-DD" },
-    { "label": "MMMM D, YYYY (e.g. April 27, 2025)", "value": "MMMM D, YYYY" },
-    { "label": "D MMM YYYY (e.g. 27 Apr 2025)", "value": "D MMM YYYY" },
-    { "label": "Do MMMM YYYY (e.g. 27th April 2025)", "value": "Do MMMM YYYY" }
+    { "label": "MM/dd/yyyy (e.g. 04/27/2025)", "value": "MM/dd/yyyy" },
+    { "label": "dd/MM/yyyy (e.g. 27/04/2025)", "value": "dd/MM/yyyy" },
+    { "label": "yyyy-MM-dd (e.g. 2025-04-27)", "value": "yyyy-MM-dd" },
+    { "label": "LLLL d, yyyy (e.g. April 27, 2025)", "value": "LLLL d, yyyy" },
+    { "label": "d LLL yyyy (e.g. 27 Apr 2025)", "value": "d LLL yyyy" },
+    { "label": "d' 'LLLL yyyy (e.g. 27 April 2025)", "value": "d LLLL yyyy" }
   ],
   "timeZones": [
     { "label": "UTC", "value": "UTC" },

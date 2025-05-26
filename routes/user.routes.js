@@ -15,4 +15,8 @@ router.put(
   userController.updateUserPreferences
 );
 
+// /user/account/delete
+// delete user account
+router.delete('')
+
 module.exports = router;

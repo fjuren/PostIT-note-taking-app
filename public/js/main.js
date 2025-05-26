@@ -85,20 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// user Preferences (display)
-
+// handle color reset button from user preferences (display)
 document.addEventListener('DOMContentLoaded', () => {
-  // ---- theme ----
-  const theme = window.__USER_PREFERENCES__.theme;
-  document.querySelector('html').setAttribute('data-bs-theme', theme);
-
-  // ---- Primary color ----
-  const primaryColor = window.__USER_PREFERENCES__.primaryColor;
-  document.documentElement.style.setProperty('--color-primary', primaryColor);
-  // hover states (e.g. for buttons)
-  // See CSS btn-primary:hover btn-outline-primary:hover for explanation
-
-  // reset primary color button on account page
+  // resets primary color button on account page (to UI only)
   document.addEventListener('DOMContentLoaded', () => {
     const defaultColor = '#9b5de5';
     const colorInput = document.getElementById('primaryColor');
@@ -108,18 +97,36 @@ document.addEventListener('DOMContentLoaded', () => {
       colorInput.value = defaultColor;
     });
   });
+});
 
-  // ---- font size ----
-  const fontSize = window.__USER_PREFERENCES__.fontSize || 1;
-  document.documentElement.style.setProperty(
-    '--user-font-size',
-    fontSize + 'rem'
-  );
+// handle spinner
+const showSpinner = () => {
+  spinner.show()
+}
+const spinner = {
+  show: function(spinnerId = 'spinner') {
+    const spinner = document.getElementById(spinnerId);
+    if (spinner) spinner.classList.remove('visually-hidden');
+  },
+  
+  hide: function(spinnerId = 'spinner') {
+    const spinner = document.getElementById(spinnerId);
+    if (spinner) spinner.classList.add('visually-hidden');
+  }
+};
+// handel the spinner on page load/navigation
+window.addEventListener('load', function() {
+  spinner.hide();
+});
 
-  // ---- font family ----
-  const fontFamily = window.__USER_PREFERENCES__.fontFamily || 'system-ui';
-  document.documentElement.style.setProperty('--user-font-family', fontFamily);
-  // ---- Timezone ----
+window.addEventListener('pageshow', function() {
+  spinner.hide();
+});
 
-  // ---- Date Format ----
+// handle spinner on modal op
+document.addEventListener('DOMContentLoaded', function() {
+  // Hide spinner whenever any modal opens
+  document.addEventListener('shown.bs.modal', function() {
+    spinner.hide();
+  });
 });

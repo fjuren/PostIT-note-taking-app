@@ -11,7 +11,8 @@ const getAllUserNotes = async (req, res) => {
     const tags = await noteService.getAllNoteTags(userId);
     if (!filters) {
       // all notes
-      const notes = await noteService.getAllUserNotes(userId);
+      const notes = await noteService.getAllUserNotes(user);
+
       res.render('notes', {
         user,
         notes,
@@ -20,7 +21,7 @@ const getAllUserNotes = async (req, res) => {
       });
     } else {
       // filtered notes
-      const notes = await noteService.getFileredNotes(userId, filters);
+      const notes = await noteService.getFileredNotes(user, filters);
       res.render('notes', {
         user,
         notes,

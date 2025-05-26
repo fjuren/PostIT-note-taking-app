@@ -13,6 +13,7 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         let user = await User.findOne({ googleId: profile.id });
+        console.log('login', user)
 
         // Checking if user already exists. If yes, update fields to most recent from provider
         if (user) {
