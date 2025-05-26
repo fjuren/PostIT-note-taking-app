@@ -18,6 +18,7 @@ const getAllUserNotes = async (req, res) => {
         notes,
         tags,
         filters: [], // handles case where no filtesr are applied but still defines filters
+        flash: req.session.flash || {}, // enables flash capability if needed in the future
       });
     } else {
       // filtered notes
@@ -27,6 +28,7 @@ const getAllUserNotes = async (req, res) => {
         notes,
         tags,
         filters,
+        flash: req.session.flash || {}, // enables flash capability if needed in the future
       });
     }
   } catch (err) {
@@ -36,9 +38,12 @@ const getAllUserNotes = async (req, res) => {
 };
 
 // /notes/create
-// renders the note creation page
+// gets the note creation page
 const renderCreateNotePage = (req, res) => {
-  res.render('notes/create', { user: req.user });
+  res.render('notes/create', {
+    user: req.user,
+    flash: req.session.flash || {}, // enables flash capability if needed in the future
+  });
 };
 
 // // /notes
@@ -77,6 +82,7 @@ const getUserNote = async (req, res) => {
     res.render('notes/edit', {
       user,
       note,
+      flash: req.session.flash || {}, // enables flash capability if needed in the future
     });
   } catch (err) {
     console.error(err);

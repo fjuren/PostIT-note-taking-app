@@ -61,12 +61,18 @@ app.use('/user', require('./routes/user.routes'));
 
 // Proceed to login screen if not already authed
 app.get('/', ensureGuest, (req, res) => {
-  res.render('login', { user: undefined });
+  res.render('login', {
+    user: undefined,
+    flash: req.session.flash || {}, // enables flash capability if needed in the future
+  });
 });
 
 // proceed to dashboard if authed
 app.get('/dashboard', ensureAuth, (req, res) => {
-  res.render('dashboard', { user: req.user });
+  res.render('dashboard', {
+    user: req.user,
+    flash: req.session.flash || {}, // enables flash capability if needed in the future
+  });
 });
 
 const PORT = process.env.PORT || 3000;

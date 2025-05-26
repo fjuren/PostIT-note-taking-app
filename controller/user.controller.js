@@ -6,7 +6,7 @@ const renderUserAccountPage = async (req, res) => {
     const userId = req.user.id;
     const user = req.user;
     const userWithProfile = await userService.renderUserAccountPage(userId);
-    
+
     // handle flash message for popup messages
     const flash = req.session.flash;
     delete req.session.flash;
@@ -16,7 +16,7 @@ const renderUserAccountPage = async (req, res) => {
       user, // needed for the header; TODO consider changing
       userWithProfile,
       constants,
-      flash
+      flash,
     });
   } catch (err) {
     console.error(err);
@@ -56,10 +56,13 @@ const updateUserPreferences = async (req, res) => {
       dateFormat
     );
 
-    // create a flahs message for popup messages
-    req.session.flash = { message: 'Preferences updated successfully!' };
+    // create a flahs message for popup messages & handling some UI changes (ie. user themes)
+    req.session.flash = {
+      message: 'Preferences updated successfully!',
+      preferencesUpdated: true,
+    };
     await req.session.save();
-    
+
     res.redirect('/user/account');
   } catch (err) {
     console.error(err);

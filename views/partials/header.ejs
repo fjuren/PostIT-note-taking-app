@@ -34,17 +34,46 @@
       href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
       rel="stylesheet"
     />
-      <script>
-        (function () {
-          // ignore js ide warning; irrelevant
-          const prefs = <%- JSON.stringify(user?.userProfile?.preferences || { theme: 'light', fontSize: 1, primaryColor: '#9b5de5' , fontFamily: 'system-ui', timeZone: 'UTC', dateFormat: 'YYYY-MM-DD'}) %>;
-          window.__USER_PREFERENCES__ = prefs;
-          document.documentElement.setAttribute('data-bs-theme', prefs.theme);
-          document.documentElement.style.setProperty('--user-font-size', prefs.fontSize + 'rem');
-          document.documentElement.style.setProperty('--color-primary', prefs.primaryColor);
-          document.documentElement.style.setProperty('--user-font-family', prefs.fontFamily);
-        })();
-      </script>
+<script>
+  (function () {
+    const prefs = <%- JSON.stringify(user?.userProfile?.preferences || {
+      theme: 'light',
+      fontSize: 1,
+      primaryColor: '#9b5de5',
+      fontFamily: 'system-ui',
+      timeZone: 'UTC',
+      dateFormat: 'YYYY-MM-DD'
+    }) %>;
+
+    // user preferences available locally
+    window.__USER_PREFERENCES__ = prefs;
+
+    const flash = <%- JSON.stringify(flash || {}) %>;
+
+    // If user just updated preferences, sync theme immediately
+    if (flash.preferencesUpdated) {
+      const storedUserPrefTheme = '<%= user?.userProfile?.preferences?.theme || "light" %>';
+      const localThemeToggle = localStorage.getItem('preferred-theme');
+
+      if (localThemeToggle && localThemeToggle !== storedUserPrefTheme) {
+        localStorage.removeItem('preferred-theme');
+      }
+
+      document.documentElement.setAttribute('data-bs-theme', storedUserPrefTheme);
+    } else {
+      // fallback to stored preference or default
+      const localTheme = localStorage.getItem('preferred-theme');
+      const userTheme = window.__USER_PREFERENCES__.theme || 'light';
+      const finalTheme = localTheme || userTheme;
+      document.documentElement.setAttribute('data-bs-theme', finalTheme);
+    }
+
+    // set remaining preferences!
+    document.documentElement.style.setProperty('--user-font-size', prefs.fontSize + 'rem');
+    document.documentElement.style.setProperty('--color-primary', prefs.primaryColor);
+    document.documentElement.style.setProperty('--user-font-family', prefs.fontFamily);
+  })();
+</script>
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/main.js" defer></script>
   </head>

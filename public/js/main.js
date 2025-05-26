@@ -73,7 +73,6 @@ const toggleTheme = () => {
   // Set the new theme
   html.setAttribute('data-bs-theme', newTheme);
 
-  // Optional: Save to localStorage so the preference persists
   localStorage.setItem('preferred-theme', newTheme);
 };
 

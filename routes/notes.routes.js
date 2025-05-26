@@ -8,7 +8,7 @@ const notesController = require('../controller/notes.controller');
 router.get('/', ensureAuth, notesController.getAllUserNotes);
 
 // /notes/create
-// renders the note creation page
+// get the note creation page
 router.get('/create', ensureAuth, notesController.renderCreateNotePage);
 
 // notes/tags
