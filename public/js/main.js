@@ -101,32 +101,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // handle spinner
 const showSpinner = () => {
-  spinner.show()
-}
+  spinner.show();
+};
 const spinner = {
-  show: function(spinnerId = 'spinner') {
-    const spinner = document.getElementById(spinnerId);
+  show: () => {
+    const spinner = document.getElementById('spinner');
     if (spinner) spinner.classList.remove('visually-hidden');
   },
-  
-  hide: function(spinnerId = 'spinner') {
-    const spinner = document.getElementById(spinnerId);
+
+  hide: () => {
+    const spinner = document.getElementById('spinner');
     if (spinner) spinner.classList.add('visually-hidden');
-  }
+  },
 };
 // handel the spinner on page load/navigation
-window.addEventListener('load', function() {
+window.addEventListener('load', () => {
   spinner.hide();
 });
 
-window.addEventListener('pageshow', function() {
+window.addEventListener('pageshow', () => {
   spinner.hide();
 });
 
 // handle spinner on modal op
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   // Hide spinner whenever any modal opens
-  document.addEventListener('shown.bs.modal', function() {
+  document.addEventListener('shown.bs.modal', () => {
     spinner.hide();
   });
+});
+
+// handle toast
+document.addEventListener('DOMContentLoaded', () => {
+  const getToast = document.getElementById('liveToast');
+  if (getToast.dataset.showToast === 'true')
+    bootstrap.Toast.getOrCreateInstance(getToast).show();
 });
