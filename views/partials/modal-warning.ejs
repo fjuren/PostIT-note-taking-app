@@ -1,0 +1,24 @@
+            <!-- Modal -->
+            <div class="modal fade" id="warningModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="warningModal" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5">Delete account</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="card-text mb-3">
+                      Are you sure you want to delete your account and all of it's associated data? <em>WARNING:</em> You cannot undo this.
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                        <form action="/user/account/?_method=DELETE" method="POST" style="display: inline">
+                            <button type="submit" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#warningModal" onclick="showSpinner()">
+                                Delete My Account
+                            </button>
+                        </form>
+                  </div>
+                </div>
+              </div>
+            </div>

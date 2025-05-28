@@ -38,11 +38,14 @@
   --bs-dropdown-font-size: var(--user-font-size);
 }
 
-/* override bootstrap toast colors per defined user preferences */
 .toast {
-  --bs-toast-bg: var(--color-primary);
+  /* override bootstrap toast colors per defined user preferences */
+  /* --bs-toast-bg: var(--color-primary);
   --bs-toast-color: white;
-  --bs-toast-border-color: var(--color-primary);
+  --bs-toast-border-color: var(--color-primary); */
+  --bs-toast-bg: var(--bs-success);
+  --bs-toast-color: white;
+  --bs-toast-border-color: var(--bs-success);
 }
 
 /* Add hover effect to cards */

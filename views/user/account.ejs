@@ -1,5 +1,6 @@
 <%- include('../partials/header') %>
 <%- include('../partials/toast') %>
+<%- include('../partials/modal-warning') %>
 <div class="container pb-3">
   <h1>My Account</h1>
   <div class="card shadow-sm border-0 mb-4" id="profile-info">
@@ -177,11 +178,9 @@
         </div>
         <div class="col-12 col-sm-6 col-md-6">
           <div class="mb-3">
-            <form action="/user/account/" method="POST" style="display: inline">
-              <button type="submit" class="btn btn-danger" onclick="showSpinner()">
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#warningModal" onclick="showSpinner()">
                 Delete Account
               </button>
-            </form>
           </div>
         </div>
       </div>

@@ -98,14 +98,55 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// handle spinner
-const showSpinner = () => {
-  spinner.show();
+// const showSpinner = () => {
+//   const spinnerMessage = document.getElementById('spinner-message');
+//   if (spinnerMessage) {
+//     spinnerMessage.classList.add('visually-hidden')
+//   }
+  
+  // handle spinner
+  const showSpinner = () => {
+    // const spinner = document.getElementById('spinner');
+    // // spinner message reset (causes incorrect behavior otherwise)
+    // const spinnerMessage = document.getElementById('spinner-message');
+
+    // // if (!spinner) return; // safety check
+
+    // // Hide message initially
+    // if (spinnerMessage) {
+    //   spinnerMessage.classList.add('visually-hidden');
+    // }
+    
+    spinner.show();
+    
+
+    // show message after 3 seconds
+    // setTimeout(() => {
+    //   // also checks if the spinner itself is still visible
+    //   if (spinnerMessage) {
+    //     spinnerMessage.classList.remove('visually-hidden');
+    //   }
+    // }, 3000);
 };
+
 const spinner = {
   show: () => {
+    console.log('show runs')
     const spinner = document.getElementById('spinner');
+    const spinnerMessage = document.getElementById('spinner-message');
+
+    if (spinnerMessage) {
+      spinnerMessage.classList.add('visually-hidden');
+    }
     if (spinner) spinner.classList.remove('visually-hidden');
+
+    setTimeout(() => {
+        console.log('Revealing message'); // Debug line
+      // also checks if the spinner itself is still visible
+      if (spinnerMessage) {
+        spinnerMessage.classList.remove('visually-hidden');
+      }
+    }, 3000);
   },
 
   hide: () => {
@@ -113,6 +154,7 @@ const spinner = {
     if (spinner) spinner.classList.add('visually-hidden');
   },
 };
+
 // handel the spinner on page load/navigation
 window.addEventListener('load', () => {
   spinner.hide();

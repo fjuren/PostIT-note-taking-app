@@ -36,15 +36,6 @@ const updateUserPreferences = async (req, res) => {
       timeZone,
       dateFormat,
     } = req.body;
-    console.log(
-      displayName,
-      theme,
-      primaryColor,
-      fontSize,
-      fontFamily,
-      timeZone,
-      dateFormat
-    );
     await userService.updateUserPreferences(
       userId,
       displayName,
@@ -70,7 +61,34 @@ const updateUserPreferences = async (req, res) => {
   }
 };
 
+// /user/account/delete
+// delete user account and all associated data
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.user.id
+    console.log(userId)
+    await userService.deleteUser (userId)
+
+    // flash for user deleted toast message
+    req.session.flash = {
+      message: 'Account deleted successfully'
+    };
+    await req.session.save()
+
+    // logs user out and destroys the session session (recall: methods from passport)
+    // req.logout(() => {
+      // req.session.destroy(() => {
+        res.redirect('/');
+      // });
+    // });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+}
+
 module.exports = {
   renderUserAccountPage,
   updateUserPreferences,
+  deleteUser
 };

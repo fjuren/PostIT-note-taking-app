@@ -1,5 +1,8 @@
 const User = require('../models/User');
+const UserProfile = require('../models/UserProfile')
+const Note = require('../models/Note')
 const miscHelpers = require('../utils/misc');
+const mongoose = require('mongoose');
 
 const renderUserAccountPage = async (userId) => {
   // removing unessary fields from the resposne to the browser
@@ -47,7 +50,33 @@ const updateUserPreferences = async (
   return user;
 };
 
+const deleteUser = async (userId) => {
+  const mongooseSession = await mongoose.startSession()
+  try {
+    // IMPORTANT: withTransaction will rollback any deletions if anything fails within the try block
+    await mongooseSession.withTransaction(async () => {
+      const user = await User.findById(userId).session(mongooseSession)
+      if (!deleteUser) {
+        throw new Error('Error deleteing account; User not found');
+      }
+      // deletes cascading data
+      await UserProfile.findByIdAndDelete(user.userProfile).session(mongooseSession)
+      await Note.deleteMany({ user: userId }).session(mongooseSession)
+      // delete user if all good
+      await User.findByIdAndDelete(userId).session(mongooseSession)
+      return
+    })
+
+  } catch (err) {
+    console.error('Error deleting user: ', err)
+    throw err
+  } finally {
+    await mongooseSession.endSession()
+  }
+}
+
 module.exports = {
   renderUserAccountPage,
   updateUserPreferences,
+  deleteUser
 };

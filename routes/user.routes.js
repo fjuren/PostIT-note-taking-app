@@ -16,7 +16,7 @@ router.put(
 );
 
 // /user/account/delete
-// delete user account
-router.delete('')
+// delete user account and all associated data
+router.delete('/account', ensureAuth, userController.deleteUser)
 
 module.exports = router;
