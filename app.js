@@ -14,12 +14,6 @@ dotenv.config();
 // config for passport setup
 require('./config/passport');
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log('MongoDB Connected'))
-  .catch((err) => console.error(err));
-
 // create express server
 const app = express();
 
@@ -76,6 +70,14 @@ app.get('/dashboard', ensureAuth, (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  // connect to Mongo
+  mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(() => console.log('MongoDB Connected'))
+    .catch((err) => console.error(err));
+  // start server
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}

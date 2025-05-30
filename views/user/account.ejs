@@ -1,6 +1,7 @@
 <%- include('../partials/header') %>
 <%- include('../partials/toast') %>
 <%- include('../partials/modal-warning') %>
+<%- include('../partials/modal-selection') %>
 <div class="container pb-3">
   <h1>My Account</h1>
   <div class="card shadow-sm border-0 mb-4" id="profile-info">
@@ -14,6 +15,7 @@
               type="email"
               readonly
               class="form-control form-control-plaintext"
+              style="border: none; pointer-events: default; cursor: default; box-shadow: none;"
               id="email"
               name="email"
               value="<%- userWithProfile.email %>"
@@ -28,6 +30,7 @@
               readonly
               class="form-control form-control-plaintext"
               id="createdAt"
+              style="border: none; pointer-events: default; cursor: default; box-shadow: none;"
               value="<%= userWithProfile.createdAt %>"
             />
           </div>
@@ -88,8 +91,13 @@
                   id="primaryColor"
                   name="primaryColor"
                   value="<%- userWithProfile.userProfile?.preferences.primaryColor %>"
-                />
-                <button type="button" class="btn btn-outline-secondary" id="resetColorBtn">Reset Color</button>
+                  />
+                  
+                  <!-- fake preview -->
+                <button type="button" class="btn" aria-disabled="true" id="colorPreviewBtn" style="pointer-events: none;">
+                  Example
+                </button>
+                <button type="button" class="btn btn-outline-primary" id="resetColorBtn">Reset Color</button>
               </div>
             </div>
           </div>
@@ -155,11 +163,12 @@
             </div>
           </div>
         </div>
-
-        <button type="submit" class="btn btn-primary" onclick="showSpinner()">Save Preferences</button>
-        <button type="button" class="btn btn-outline-secondary ms-2">
-          Reset to Defaults
-        </button>
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary" onclick="showSpinner()">Save Preferences</button>
+          <button type="button" class="btn btn-outline-primary">
+            Reset to Defaults
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -168,21 +177,15 @@
   <div class="card shadow-sm border-0 mb-5" id="account">
     <div class="card-body p-4">
       <h3 class="card-title mb-3">Account</h3>
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-6">
-          <div class="mb-3">
-            <button type="button" class="btn btn-outline-secondary" onclick="showSpinner()">
-              Download Data
-            </button>
-          </div>
-        </div>
-        <div class="col-12 col-sm-6 col-md-6">
-          <div class="mb-3">
-              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#warningModal" onclick="showSpinner()">
-                Delete Account
-              </button>
-          </div>
-        </div>
+      <div class="d-flex gap-2">
+        <!-- <form> -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#warningModal" onclick="showSpinner()">
+          Delete Account
+        </button>
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#selectionModal" onclick="showSpinner()">
+            Download My Data
+          </button>
+        <!-- </form> -->
       </div>
     </div>
   </div>

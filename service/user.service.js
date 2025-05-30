@@ -1,6 +1,6 @@
 const User = require('../models/User');
-const UserProfile = require('../models/UserProfile')
-const Note = require('../models/Note')
+const UserProfile = require('../models/UserProfile');
+const Note = require('../models/Note');
 const miscHelpers = require('../utils/misc');
 const mongoose = require('mongoose');
 
@@ -50,33 +50,50 @@ const updateUserPreferences = async (
   return user;
 };
 
+// /user/account
+// delete user account and all associated data
 const deleteUser = async (userId) => {
-  const mongooseSession = await mongoose.startSession()
+  const mongooseSession = await mongoose.startSession();
   try {
     // IMPORTANT: withTransaction will rollback any deletions if anything fails within the try block
     await mongooseSession.withTransaction(async () => {
-      const user = await User.findById(userId).session(mongooseSession)
+      const user = await User.findById(userId).session(mongooseSession);
       if (!deleteUser) {
         throw new Error('Error deleteing account; User not found');
       }
       // deletes cascading data
-      await UserProfile.findByIdAndDelete(user.userProfile).session(mongooseSession)
-      await Note.deleteMany({ user: userId }).session(mongooseSession)
+      await UserProfile.findByIdAndDelete(user.userProfile).session(
+        mongooseSession
+      );
+      await Note.deleteMany({ user: userId }).session(mongooseSession);
       // delete user if all good
-      await User.findByIdAndDelete(userId).session(mongooseSession)
-      return
-    })
-
+      await User.findByIdAndDelete(userId).session(mongooseSession);
+      return;
+    });
   } catch (err) {
-    console.error('Error deleting user: ', err)
-    throw err
+    console.error('Error deleting user: ', err);
+    throw err;
   } finally {
-    await mongooseSession.endSession()
+    await mongooseSession.endSession();
   }
-}
+};
+
+// /user/account/export
+// gets a data export of authorized user data
+const exportUserData = async (userId) => {
+  const user = await User.findById(userId).populate('userProfile');
+  const notes = await Note.find({ user: userId });
+  return {
+    dataForExport: {
+      user,
+      notes,
+    },
+  };
+};
 
 module.exports = {
   renderUserAccountPage,
   updateUserPreferences,
-  deleteUser
+  deleteUser,
+  exportUserData,
 };

@@ -6,23 +6,29 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "test": "mocha --require ./test/setup.js \"test/**/*.test.js\" --timeout 10000"
   },
   "dependencies": {
+    "chai": "^4.5.0",
+    "chai-http": "^4.4.0",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "json2csv": "^6.0.0-alpha.2",
     "luxon": "^3.6.1",
     "method-override": "^3.0.0",
     "mongodb": "^6.16.0",
     "mongoose": "^7.5.0",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pdfkit": "^0.17.1"
   },
   "devDependencies": {
+    "mocha": "^11.5.0",
     "nodemon": "^3.0.1"
   }
 }

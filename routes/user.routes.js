@@ -15,8 +15,12 @@ router.put(
   userController.updateUserPreferences
 );
 
-// /user/account/delete
+// /user/account
 // delete user account and all associated data
-router.delete('/account', ensureAuth, userController.deleteUser)
+router.delete('/account', ensureAuth, userController.deleteUser);
+
+// /user/account/export
+// requests a data export of authorized user data
+router.post('/account/export', ensureAuth, userController.exportUserData);
 
 module.exports = router;

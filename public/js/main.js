@@ -86,69 +86,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // handle color reset button from user preferences (display)
 document.addEventListener('DOMContentLoaded', () => {
-  // resets primary color button on account page (to UI only)
-  document.addEventListener('DOMContentLoaded', () => {
-    const defaultColor = '#9b5de5';
-    const colorInput = document.getElementById('primaryColor');
-    const resetButton = document.getElementById('resetColorBtn');
+  const defaultColor = '#9b5de5';
+  // preview color
+  const colorInput = document.getElementById('primaryColor');
+  const resetButton = document.getElementById('resetColorBtn');
+  // fake preview
+  const colorPreviewBtn = document.getElementById('colorPreviewBtn');
 
-    resetButton.addEventListener('click', () => {
-      colorInput.value = defaultColor;
-    });
+  resetButton.addEventListener('click', () => {
+    console.log('button clicked');
+    colorInput.value = defaultColor;
+    colorPreviewBtn.style.backgroundColor = defaultColor;
   });
 });
 
-// const showSpinner = () => {
-//   const spinnerMessage = document.getElementById('spinner-message');
-//   if (spinnerMessage) {
-//     spinnerMessage.classList.add('visually-hidden')
-//   }
-  
-  // handle spinner
-  const showSpinner = () => {
-    // const spinner = document.getElementById('spinner');
-    // // spinner message reset (causes incorrect behavior otherwise)
-    // const spinnerMessage = document.getElementById('spinner-message');
-
-    // // if (!spinner) return; // safety check
-
-    // // Hide message initially
-    // if (spinnerMessage) {
-    //   spinnerMessage.classList.add('visually-hidden');
-    // }
-    
-    spinner.show();
-    
-
-    // show message after 3 seconds
-    // setTimeout(() => {
-    //   // also checks if the spinner itself is still visible
-    //   if (spinnerMessage) {
-    //     spinnerMessage.classList.remove('visually-hidden');
-    //   }
-    // }, 3000);
+// handle spinner
+const showSpinner = () => {
+  spinner.show();
 };
 
 const spinner = {
   show: () => {
-    console.log('show runs')
     const spinner = document.getElementById('spinner');
-    const spinnerMessage = document.getElementById('spinner-message');
-
-    if (spinnerMessage) {
-      spinnerMessage.classList.add('visually-hidden');
-    }
     if (spinner) spinner.classList.remove('visually-hidden');
-
-    setTimeout(() => {
-        console.log('Revealing message'); // Debug line
-      // also checks if the spinner itself is still visible
-      if (spinnerMessage) {
-        spinnerMessage.classList.remove('visually-hidden');
-      }
-    }, 3000);
   },
-
   hide: () => {
     const spinner = document.getElementById('spinner');
     if (spinner) spinner.classList.add('visually-hidden');
@@ -177,4 +138,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const getToast = document.getElementById('liveToast');
   if (getToast.dataset.showToast === 'true')
     bootstrap.Toast.getOrCreateInstance(getToast).show();
+});
+
+// fake button preview on account page:
+document.addEventListener('DOMContentLoaded', () => {
+  const colorInput = document.getElementById('primaryColor');
+  const previewBtn = document.getElementById('colorPreviewBtn');
+
+  if (colorInput && previewBtn) {
+    const updateColor = () => {
+      previewBtn.style.backgroundColor = colorInput.value;
+      previewBtn.style.color = '#fff';
+      previewBtn.style.border = 'none';
+    };
+
+    updateColor();
+
+    // handles color change on input change
+    colorInput.addEventListener('input', updateColor);
+  }
 });

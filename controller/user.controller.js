@@ -1,5 +1,7 @@
 const userService = require('../service/user.service');
 const constants = require('../utils/constants.json');
+const PDFDocument = require('pdfkit');
+const { Parser } = require('json2csv');
 
 const renderUserAccountPage = async (req, res) => {
   try {
@@ -61,34 +63,81 @@ const updateUserPreferences = async (req, res) => {
   }
 };
 
-// /user/account/delete
+// /user/account
 // delete user account and all associated data
 const deleteUser = async (req, res) => {
   try {
-    const userId = req.user.id
-    console.log(userId)
-    await userService.deleteUser (userId)
+    const userId = req.user.id;
+    await userService.deleteUser(userId);
 
     // flash for user deleted toast message
     req.session.flash = {
-      message: 'Account deleted successfully'
+      message: 'Account deleted successfully',
     };
-    await req.session.save()
+    await req.session.save();
 
     // logs user out and destroys the session session (recall: methods from passport)
     // req.logout(() => {
-      // req.session.destroy(() => {
-        res.redirect('/');
-      // });
+    // req.session.destroy(() => {
+    res.redirect('/');
+    // });
     // });
   } catch (err) {
     console.error(err);
     res.status(500).send('Server Error');
   }
-}
+};
+
+// /user/account/export
+// gets a data export of authorized user data
+const exportUserData = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const formatType = req.body.format;
+    console.log('formatType', formatType);
+    // get add related user data as exported file
+    const userDataExport = await userService.exportUserData(userId);
+
+    if (formatType === 'json') {
+      // package export data as json
+      res.setHeader(
+        'Content-Disposition',
+        'attachment; filename="user-data.json"'
+      );
+      res.setHeader('Content-Type', 'application/json');
+      res.send(userDataExport);
+    } else if (formatType === 'csv') {
+      // package export data as CSV
+      const parser = new Parser();
+      const csv = parser.parse(userDataExport);
+
+      res.setHeader(
+        'Content-Disposition',
+        'attachment; filename="user-data.csv"'
+      );
+      res.setHeader('Content-Type', 'text/csv');
+      res.send(csv);
+    } else if (formatType === 'pdf') {
+      // package export data as pdf
+      const doc = new PDFDocument();
+      res.setHeader(
+        'Content-Disposition',
+        'attachment; filename="user-data.pdf"'
+      );
+      res.setHeader('Content-Type', 'application/pdf');
+      doc.pipe(res);
+      doc.text(JSON.stringify(userDataExport, null, 2));
+      doc.end();
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Server Error');
+  }
+};
 
 module.exports = {
   renderUserAccountPage,
   updateUserPreferences,
-  deleteUser
+  deleteUser,
+  exportUserData,
 };
