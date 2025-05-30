@@ -1,8 +1,5 @@
 const { expect } = require('chai');
 const mongoose = require('mongoose');
-const Note = require('../../models/Note');
-const User = require('../../models/User');
-const UserProfile = require('../../models/UserProfile');
 // importing fake data
 const createFakeUser = require('../fakeTestData/createFakeUser');
 const fakeNotes = require('../fakeTestData/createFakeNote');
@@ -15,17 +12,14 @@ describe('Note Model', async () => {
   let testUser;
 
   before(async () => {
-    console.log('connecting to test db and setting up data');
-    await mongoose.connect(process.env.MONGODB_TEST_URI); // using test db wtihin mongo cluster
     testUser = await createFakeUser();
-    console.log('testing starting');
   });
 
   after(async () => {
     console.log('Cleaning up test data');
-    await mongoose.connection.db.dropDatabase();
-    await mongoose.disconnect();
-    console.log('testing complete');
+    await mongoose.connection.db.collection('notes').deleteMany({});
+    await mongoose.connection.db.collection('users').deleteMany({});
+    console.log('DB cleanup of note.test complete!');
   });
 
   it('should create a new note with valid data', async () => {
@@ -46,10 +40,14 @@ describe('Note Model', async () => {
   });
 
   it('should fail validation when content is missing', async () => {
-    // TODO: Create a note without content and verify validation fails
+    const note = await fakeNotes.missingContentFakeNote(testUser._id);
+
+    const validationError = note.validateSync();
+    expect(validationError.errors.content).to.exist;
   });
 
-  it('should use default empty string when category is not provided', async () => {
-    // TODO: Create a note without specifying category and verify it defaults to empty string
+  it('should use default empty array when category is not provided', async () => {
+    const note = await fakeNotes.noTagsGivenFakeNote(testUser._id);
+    expect(note).to.have.property('tags').deep.equal([]);
   });
 });

@@ -23,4 +23,31 @@ async function missingTitleFakeNote(userId) {
   });
 }
 
-module.exports = { correctFakeNote, missingTitleFakeNote };
+async function missingContentFakeNote(userId) {
+  return new Note({
+    title: 'Title goes here',
+    content: '', // invalid content error
+    tags: ['test', 'note'],
+    user: userId,
+    createdAt: fixedCreatedAt,
+    updatedAt: fixedUpdatedAt,
+  });
+}
+
+async function noTagsGivenFakeNote(userId) {
+  return new Note({
+    title: 'Title goes here',
+    content: '',
+    // no tags provided
+    user: userId,
+    createdAt: fixedCreatedAt,
+    updatedAt: fixedUpdatedAt,
+  });
+}
+
+module.exports = {
+  correctFakeNote,
+  missingTitleFakeNote,
+  missingContentFakeNote,
+  noTagsGivenFakeNote,
+};

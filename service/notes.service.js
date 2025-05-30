@@ -1,27 +1,37 @@
 const Note = require('../models/Note');
-const miscHelpers = require('../utils/misc')
+const miscHelpers = require('../utils/misc');
 
 // /notes
 // Gets all user notes
 const getAllUserNotes = async (user) => {
-  const originalNotes = await Note.find({ user: user.id }).sort({ updatedAt: 'desc' });
+  const originalNotes = await Note.find({ user: user.id }).sort({
+    updatedAt: 'desc',
+  });
   // apply formatting to date based on user preference
-  const notes = originalNotes.map(note => ({
-    ...note.toObject?.() ?? note,
-    updatedAt: miscHelpers.formatDateWithPreferences(user.userProfile, note.updatedAt)
-  }));  
-  return notes
-  };
+  const notes = originalNotes.map((note) => ({
+    ...(note.toObject?.() ?? note),
+    updatedAt: miscHelpers.formatDateWithPreferences(
+      user.userProfile,
+      note.updatedAt
+    ),
+  }));
+  return notes;
+};
 
 // notes
 // Gets all filtered notes
 const getFileredNotes = async (user, filters) => {
-  const originalNotes = await Note.find({ user: user.id }).where('tags').in(filters)
-    const notes = originalNotes.map(note => ({
-    ...note.toObject?.() ?? note,
-    updatedAt: miscHelpers.formatDateWithPreferences(user.userProfile, note.updatedAt)
-  }));  
-  return notes
+  const originalNotes = await Note.find({ user: user.id })
+    .where('tags')
+    .in(filters);
+  const notes = originalNotes.map((note) => ({
+    ...(note.toObject?.() ?? note),
+    updatedAt: miscHelpers.formatDateWithPreferences(
+      user.userProfile,
+      note.updatedAt
+    ),
+  }));
+  return notes;
 };
 
 // // /notes

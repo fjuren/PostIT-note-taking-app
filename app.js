@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
-const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
@@ -69,15 +68,4 @@ app.get('/dashboard', ensureAuth, (req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 3000;
-if (process.env.NODE_ENV !== 'test') {
-  // connect to Mongo
-  mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => console.log('MongoDB Connected'))
-    .catch((err) => console.error(err));
-  // start server
-  app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-  });
-}
+module.exports = app;
