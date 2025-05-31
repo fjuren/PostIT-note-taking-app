@@ -48,17 +48,17 @@ const renderCreateNotePage = (req, res) => {
 
 // // /notes
 // // Creates a new note
-const createNote = async (req, res) => {
+const createNote = async (req, res, next) => {
   try {
     const { title, content } = req.body;
     const rawTags = req.body['input-custom-dropdown'];
     const tagValues = miscHelpers.getTagValues(rawTags);
     const userId = req.user.id;
     await noteService.createNote(title, content, userId, tagValues);
-    res.redirect('/notes');
+    res.redirect(303, '/notes');
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
+    // use errorHandler
+    next(err)
   }
 };
 

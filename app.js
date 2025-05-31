@@ -6,6 +6,7 @@ const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const methodOverride = require('method-override');
 const { ensureAuth, ensureGuest } = require('./middleware/auth');
+const errorHandler = require('./middleware/errorHandler');
 
 // enables .env vars
 dotenv.config();
@@ -67,5 +68,8 @@ app.get('/dashboard', ensureAuth, (req, res) => {
     flash: req.session.flash || {}, // enables flash capability if needed in the future
   });
 });
+
+// middleware for better api error handling
+app.use(errorHandler)
 
 module.exports = app;

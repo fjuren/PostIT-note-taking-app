@@ -1,52 +1,60 @@
 const chai = require('chai');
 const { expect } = chai;
 const app = require('../../app');
-const Note = require('../../models/Note');
 const fakeNotes = require('../fakeTestData/createFakeNote');
 const createFakeUser = require('../fakeTestData/createFakeUser');
+const createFakeUserProfile = require('../fakeTestData/createFakeUserProfile');
 
 describe('Notes API - GET Endpoints', () => {
   let testUser;
 
+  // create fake user and their fake user profile
   before(async () => {
     testUser = await createFakeUser();
+    testUserProfile = await createFakeUserProfile()
   });
-
-  it('should get all notes for a user', (done) => {
-    fakeNotes
-      .correctFakeNote(testUser._id)
-      .then(() => {
-        chai
-          .request(app)
-          .get('/notes')
-          .end((err, res) => {
-            expect(res).to.have.status(200);
-            expect(res).to.be.html;
-            expect(res.text).to.include('Test Note');
-            expect(res.text).to.include('This is a test note');
-            // expect(res.text).to.include(testUser.userProfile.displayName);
-            done();
-          });
-      })
-      .catch(done);
-  });
-
-  //   // Exercise: Add a test for getting a specific note by ID
-  //   it('should get a specific note by ID', (done) => {
-  //     // TODO: First create a test note, then fetch it by ID
-  //     // Verify the returned note has the expected properties
-  //     // Hint: You'll need to make two requests - one to create, one to fetch
-  //   });
-
-  //   // Exercise: Add a test for getting notes filtered by category
-  //   it('should get notes filtered by category', (done) => {
-  //     // TODO: Test the endpoint that filters notes by category
-  //     // Verify only notes with the specified category are returned
-  //     // Ask for help if this does not make sense
-  //   });
-
-  // After each test, clean up. Do not leave growing users in your db.
+  
+  // delete fake user & notes
   afterEach(() => {
-    // delete app.request.user;
+    delete app.request.user;
+    delete app.request.note;
   });
+
+  it('should get all notes for a user', async () => {
+    await fakeNotes.noTagsGivenFakeNote(testUser._id)
+    await fakeNotes.correctFakeNote(testUser._id)
+    const res = await chai.request(app).get('/notes')
+    expect(res).to.have.status(200);
+    expect(res).to.be.html;
+    expect(res.text).to.include('Test Note');
+    expect(res.text).to.include('This is a test note');
+    expect(res.text).to.include('Title of no tags note');
+    expect(res.text).to.include(testUserProfile.displayName);
+
+  });
+
+    it('should get a specific note by ID', async() => {
+      const note = await fakeNotes.correctFakeNote(testUser._id)
+      const res = await chai.request(app).get(`/notes/${note._id}`)
+      expect(res).to.have.status(200);
+      expect(res).to.be.html;
+      expect(res.text).to.include('Test Note');
+      expect(res.text).to.include('This is a test note');
+      expect(res.text).to.include('tags');
+      expect(res.text).to.include('value="test,note,jumanji,school"'); // tag values
+      expect(res.text).to.include(testUserProfile.displayName);
+      // updatedAt and createdAt fields don't exist when calling note by ID and rendering the server-rendered html (ejs)
+    });
+
+    it('should get notes filtered by category', async() => {
+    const note1 = await fakeNotes.correctFakeNote(testUser._id) // contains jumanji tag
+    const note2 = await fakeNotes.correctFakeNote2(testUser._id) // contains jumanji tag
+    const note3 = await fakeNotes.correctFakeNote3(testUser._id) // doesn't contain jumanji tag
+    const res = await chai.request(app).get('/notes?filter=jumanji')
+    expect(res).to.have.status(200);
+    expect(res).to.be.html;
+    expect(res.text).to.include(note1._id);
+    expect(res.text).to.include(note2._id);
+    expect(res.text).to.not.include(note3._id);
+    });
 });
