@@ -3,17 +3,9 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
 const UserProfile = require('../models/UserProfile');
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
-    },
-    async (accessToken, refreshToken, profile, done) => {
+const handleGoogleLogin = async (accessToken, refreshToken, profile, done) => {
       try {
         let user = await User.findOne({ googleId: profile.id });
-        console.log('login', user)
 
         // Checking if user already exists. If yes, update fields to most recent from provider
         if (user) {
@@ -32,23 +24,11 @@ passport.use(
             { new: true }
           );
 
-          // getting defaults from userProfile schema;
-          const userProfile = await UserProfile.findById(user.userProfile);
-          // Merge existing preferences with schema defaults
-          const tempProfile = new UserProfile(); // gets defaults
-          const defaultPreferences = tempProfile.preferences || {};
-          const existingPreferences = userProfile.preferences || {};
-          const mergedPreferences = {
-            ...defaultPreferences,
-            ...existingPreferences,
-          };
-
           await UserProfile.findOneAndUpdate(
             { _id: user.userProfile },
             {
               $set: {
                 displayName: profile.displayName || profile.name.givenName,
-                preferences: mergedPreferences,
                 lastLogin: new Date(),
               },
             },
@@ -77,6 +57,15 @@ passport.use(
         done(err, null);
       }
     }
+
+passport.use(
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    },
+    handleGoogleLogin
   )
 );
 
@@ -94,3 +83,5 @@ passport.deserializeUser(async (id, done) => {
     done(err, null);
   }
 });
+
+module.exports = handleGoogleLogin

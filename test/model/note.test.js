@@ -8,7 +8,7 @@ const {
   fixedUpdatedAt,
 } = require('../fakeTestData/createFakeDates');
 
-describe('Note Model', async () => {
+describe('Note Model', () => {
   let testUser;
 
   before(async () => {

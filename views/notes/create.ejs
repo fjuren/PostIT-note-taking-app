@@ -4,7 +4,7 @@
   <h1 class="h4">Create New Note</h1>
   <div class="card shadow-sm border-0 mb-5" id="create">
     <div class="card-body p-4">
-      <form action="/notes" method="POST">
+      <form id="createNoteForm" action="/notes" method="POST">
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
           <input type="text" class="form-control" id="title" name="title" required>
@@ -17,7 +17,7 @@
           <label for="input-custom-dropdown" class="form-label">Tags</label>
           <input name="input-custom-dropdown" class="tagify--custom-dropdown form-control" placeholder="Add tags" value="">
         </div>
-        <button type="submit" class="btn btn-primary" onclick="showSpinner()">Save Note</button>
+        <button type="submit" class="btn btn-primary" onclick="showSpinner(createNoteForm)">Save Note</button>
       </form>
     </div>
   </div>
