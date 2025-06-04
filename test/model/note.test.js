@@ -16,7 +16,7 @@ describe('Note Model', () => {
   });
 
   after(async () => {
-    console.log('Cleaning up test data');
+    console.log('Cleaning up note.test data');
     await mongoose.connection.db.collection('notes').deleteMany({});
     await mongoose.connection.db.collection('users').deleteMany({});
     console.log('DB cleanup of note.test complete!');

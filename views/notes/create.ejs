@@ -1,17 +1,21 @@
 <%- include('../partials/header') %>
   
 <div class="container">
-  <h1 class="h4">Create New Note</h1>
+  <h1>Create New Note</h1>
   <div class="card shadow-sm border-0 mb-5" id="create">
     <div class="card-body p-4">
-      <form id="createNoteForm" action="/notes" method="POST">
+      <form id="createNoteForm" class="needs-validation" action="/notes" method="POST" novalidate>
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title" name="title" required>
+          <input type="text" class="form-control" id="title" name="title" required pattern=".*\S.*">
+          <div class="invalid-feedback" id="title-validation">
+          </div>
         </div>
         <div class="mb-3">
           <label for="content" class="form-label">Content</label>
-          <textarea class="form-control" id="content" name="content" rows="6" required></textarea>
+          <textarea class="form-control" id="content" name="content" rows="6" required pattern=".*\S.*"></textarea>
+          <div class="invalid-feedback" id="content-validation">
+          </div>
         </div>
         <div class="mb-3">
           <label for="input-custom-dropdown" class="form-label">Tags</label>

@@ -3,7 +3,7 @@ const constants = require('../utils/constants.json');
 const PDFDocument = require('pdfkit');
 const { Parser } = require('json2csv');
 
-const renderUserAccountPage = async (req, res) => {
+const renderUserAccountPage = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const user = req.user;
@@ -22,11 +22,21 @@ const renderUserAccountPage = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    next(err);
   }
 };
 
-const updateUserPreferences = async (req, res) => {
+const renderOffboardPage = async (req, res, next) => {
+  try {
+    res.render('user/offboard');
+  } catch (err) {
+    console.error(err);
+    console.error('Error rendering offboard page:', err);
+    next(err);
+  }
+};
+
+const updateUserPreferences = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const {
@@ -59,38 +69,30 @@ const updateUserPreferences = async (req, res) => {
     res.redirect('/user/account');
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    next(err);
   }
 };
 
 // /user/account
 // delete user account and all associated data
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
   try {
     const userId = req.user.id;
     await userService.deleteUser(userId);
 
-    // flash for user deleted toast message
-    req.session.flash = {
-      message: 'Account deleted successfully',
-    };
-    await req.session.save();
-
     // logs user out and destroys the session session (recall: methods from passport)
-    // req.logout(() => {
-    // req.session.destroy(() => {
-    res.redirect('/');
-    // });
-    // });
+    req.session.destroy(() => {
+      res.redirect('/user/offboard');
+    });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    next(err);
   }
 };
 
 // /user/account/export
 // gets a data export of authorized user data
-const exportUserData = async (req, res) => {
+const exportUserData = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const formatType = req.body.format;
@@ -131,7 +133,7 @@ const exportUserData = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    next(err);
   }
 };
 
@@ -140,4 +142,5 @@ module.exports = {
   updateUserPreferences,
   deleteUser,
   exportUserData,
+  renderOffboardPage,
 };

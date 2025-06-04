@@ -3,7 +3,7 @@ const miscHelpers = require('../utils/misc');
 
 // /notes
 // Gets all user notes, includes filtering by tag categories
-const getAllUserNotes = async (req, res) => {
+const getAllUserNotes = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const user = req.user;
@@ -33,17 +33,22 @@ const getAllUserNotes = async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.status(500).send('Server Error');
+    next(err);
   }
 };
 
 // /notes/create
 // gets the note creation page
-const renderCreateNotePage = (req, res) => {
-  res.render('notes/create', {
-    user: req.user,
-    flash: req.session.flash || {}, // enables flash capability if needed in the future
-  });
+const renderCreateNotePage = (req, res, next) => {
+  try {
+    res.render('notes/create', {
+      user: req.user,
+      flash: req.session.flash || {}, // enables flash capability if needed in the future
+    });
+  } catch (err) {
+    console.err(err);
+    next(err);
+  }
 };
 
 // // /notes
@@ -58,7 +63,7 @@ const createNote = async (req, res, next) => {
     res.redirect(303, '/notes');
   } catch (err) {
     // use errorHandler
-    next(err)
+    next(err);
   }
 };
 
@@ -92,7 +97,7 @@ const getUserNote = async (req, res) => {
 
 // // /notes/id
 // // Update a note
-const updateNote = async (req, res) => {
+const updateNote = async (req, res, next) => {
   try {
     const noteId = req.params.id;
     const title = req.body.title;
@@ -120,13 +125,13 @@ const updateNote = async (req, res) => {
     res.redirect('/notes');
   } catch (err) {
     console.error(err);
-    res.redirect('/notes');
+    next(err);
   }
 };
 
 // // notes/:id
 // // Delete a note
-const deleteNote = async (req, res) => {
+const deleteNote = async (req, res, next) => {
   try {
     const noteId = req.params.id;
     let note = await noteService.deleteNote(noteId);
@@ -143,19 +148,20 @@ const deleteNote = async (req, res) => {
     res.redirect('/notes');
   } catch (err) {
     console.error(err);
-    res.redirect('/notes');
+    next(err);
   }
 };
 
 // notes/tags
 // get tags from notes
-const getAllNoteTags = async (req, res) => {
+const getAllNoteTags = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const uniqueTags = await noteService.getAllNoteTags(userId);
     res.json(uniqueTags);
   } catch (err) {
     console.error(err);
+    next(err);
   }
 };
 

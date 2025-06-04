@@ -13,6 +13,79 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+// helper for field validation
+const validationMessage = (
+  fieldValue,
+  msgOne,
+  charLimit,
+  validationView,
+  msgTwo
+) => {
+  if (fieldValue && validationView) {
+    validationView.textContent = msgOne;
+
+    fieldValue.addEventListener('input', () => {
+      const submittedValue = fieldValue.value.trim();
+
+      if (!submittedValue) {
+        validationView.textContent = msgOne;
+      } else if (submittedValue.length > charLimit) {
+        validationView.textContent = msgTwo;
+      }
+    });
+  }
+};
+
+// bootstrap client-side form validation
+(() => {
+  'use strict';
+
+  // note creation & edit forms
+  // title
+  const titleField = document.getElementById('title');
+  const titleValidationView = document.getElementById('title-validation');
+  // content
+  const contentField = document.getElementById('content');
+  const contentValidationView = document.getElementById('content-validation');
+  console.log(titleValidationView);
+  console.log(contentValidationView);
+  // title
+  validationMessage(
+    titleField,
+    'Your note needs a title',
+    200,
+    titleValidationView,
+    'Title cannot exceed 200 characters'
+  );
+  // content
+  validationMessage(
+    contentField,
+    'Your note needs some content',
+    10000,
+    contentValidationView,
+    'Content cannot exceed 10,000 characters'
+  );
+
+  // Fetch all the forms
+  const forms = document.querySelectorAll('.needs-validation');
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach((form) => {
+    form.addEventListener(
+      'submit',
+      (event) => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
+      },
+      false
+    );
+  });
+})();
+
 // fetch unique note tags; used for selecting previously created tags
 const getUniqueTags = async () => {
   const endpoint = '/notes/tags';
@@ -102,7 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // handle spinner
 const showSpinner = () => {
-  spinner.show();
+  // prevent spinner if form fails validation; otherwise show the spinner
+  const formValidCheck = document.querySelector('form').checkValidity();
+  formValidCheck || formValidCheck === null ? spinner.show() : null;
 };
 
 const spinner = {

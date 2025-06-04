@@ -69,7 +69,14 @@ app.get('/dashboard', ensureAuth, (req, res) => {
   });
 });
 
+app.use((req, res) => {
+  res.status(404).render('error', {
+    message: '404 - Page Not Found',
+    errors: [{ message: "Sorry, the page you're looking for does not exist" }],
+  });
+});
+
 // middleware for better api error handling
-app.use(errorHandler)
+app.use(errorHandler);
 
 module.exports = app;

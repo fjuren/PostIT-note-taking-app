@@ -7,6 +7,10 @@ const userController = require('../controller/user.controller');
 // renders the user's account page
 router.get('/account', ensureAuth, userController.renderUserAccountPage);
 
+// /user/offboard
+// renders user offboard page if deleting account
+router.get('/offboard', userController.renderOffboardPage);
+
 // /user/account/preferences
 // submit a put request for updating user preferences
 router.put(

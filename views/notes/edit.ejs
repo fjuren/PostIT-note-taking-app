@@ -5,14 +5,18 @@
   
   <div class="card shadow-sm border-0 mb-5">
     <div class="card-body p-4">
-      <form action="/notes/<%= note._id %>?_method=PUT" method="POST">
+      <form action="/notes/<%= note._id %>?_method=PUT" class="needs-validation" method="POST" novalidate>
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title" name="title" value="<%= note.title %>" required>
+          <input type="text" class="form-control" id="title" name="title" value="<%= note.title %>" required pattern=".*\S.*">
+          <div class="invalid-feedback" id="title-validation">
+          </div>
         </div>
         <div class="mb-3">
           <label for="content" class="form-label">Content</label>
-          <textarea class="form-control" id="content" name="content" rows="10" required><%= note.content %></textarea>
+          <textarea class="form-control" id="content" name="content" rows="10" required pattern=".*\S.*"><%= note.content %></textarea>
+          <div class="invalid-feedback" id="content-validation">
+          </div>
         </div>
         <div class="mb-3">
           <label for="input-custom-dropdown" class="form-label">Tags</label>

@@ -17,28 +17,28 @@
     { "value": "'Times New Roman', serif", "label": "Times New Roman" }
   ],
   "dateFormats": [
-    { "label": "MM/dd/yyyy (e.g. 04/27/2025)", "value": "MM/dd/yyyy" },
-    { "label": "dd/MM/yyyy (e.g. 27/04/2025)", "value": "dd/MM/yyyy" },
-    { "label": "yyyy-MM-dd (e.g. 2025-04-27)", "value": "yyyy-MM-dd" },
-    { "label": "LLLL d, yyyy (e.g. April 27, 2025)", "value": "LLLL d, yyyy" },
-    { "label": "d LLL yyyy (e.g. 27 Apr 2025)", "value": "d LLL yyyy" },
-    { "label": "d' 'LLLL yyyy (e.g. 27 April 2025)", "value": "d LLLL yyyy" }
+    { "value": "MM/dd/yyyy", "label": "MM/dd/yyyy (e.g. 04/27/2025)" },
+    { "value": "dd/MM/yyyy", "label": "dd/MM/yyyy (e.g. 27/04/2025)" },
+    { "value": "yyyy-MM-dd", "label": "yyyy-MM-dd (e.g. 2025-04-27)" },
+    { "value": "LLLL d, yyyy", "label": "LLLL d, yyyy (e.g. April 27, 2025)" },
+    { "value": "d LLL yyyy", "label": "d LLL yyyy (e.g. 27 Apr 2025)" },
+    { "value": "d LLLL yyyy", "label": "d' 'LLLL yyyy (e.g. 27 April 2025)" }
   ],
   "timeZones": [
-    { "label": "UTC", "value": "UTC" },
-    { "label": "Eastern Time (US & Canada)", "value": "America/New_York" },
-    { "label": "Central Time (US & Canada)", "value": "America/Chicago" },
-    { "label": "Mountain Time (US & Canada)", "value": "America/Denver" },
-    { "label": "Pacific Time (US & Canada)", "value": "America/Los_Angeles" },
-    { "label": "London, United Kingdom", "value": "Europe/London" },
-    { "label": "Paris, France", "value": "Europe/Paris" },
-    { "label": "Berlin, Germany", "value": "Europe/Berlin" },
-    { "label": "Tokyo, Japan", "value": "Asia/Tokyo" },
-    { "label": "Shanghai, China", "value": "Asia/Shanghai" },
-    { "label": "Kolkata, India", "value": "Asia/Kolkata" },
-    { "label": "Sydney, Australia", "value": "Australia/Sydney" },
-    { "label": "São Paulo, Brazil", "value": "America/Sao_Paulo" },
-    { "label": "Johannesburg, South Africa", "value": "Africa/Johannesburg" },
-    { "label": "Auckland, New Zealand", "value": "Pacific/Auckland" }
+    { "value": "UTC", "label": "UTC" },
+    { "value": "America/New_York", "label": "Eastern Time (US & Canada)" },
+    { "value": "America/Chicago", "label": "Central Time (US & Canada)" },
+    { "value": "America/Denver", "label": "Mountain Time (US & Canada)" },
+    { "value": "America/Los_Angeles", "label": "Pacific Time (US & Canada)" },
+    { "value": "Europe/London", "label": "London, United Kingdom" },
+    { "value": "Europe/Paris", "label": "Paris, France" },
+    { "value": "Europe/Berlin", "label": "Berlin, Germany" },
+    { "value": "Asia/Tokyo", "label": "Tokyo, Japan" },
+    { "value": "Asia/Shanghai", "label": "Shanghai, China" },
+    { "value": "Asia/Kolkata", "label": "Kolkata, India" },
+    { "value": "Australia/Sydney", "label": "Sydney, Australia" },
+    { "value": "America/Sao_Paulo", "label": "São Paulo, Brazil" },
+    { "value": "Africa/Johannesburg", "label": "Johannesburg, South Africa" },
+    { "value": "Pacific/Auckland", "label": "Auckland, New Zealand" }
   ]
 }

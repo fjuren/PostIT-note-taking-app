@@ -1,0 +1,26 @@
+<svg width="300" height="225" viewBox="0 0 300 225" xmlns="http://www.w3.org/2000/svg">
+  
+  <!-- Back note (rotated slightly) -->
+  <g transform="translate(150, 112.5) rotate(-8) translate(-90, -60)">
+    <rect width="180" height="120" rx="4" fill="#FFB366" stroke="#E6A055" stroke-width="3"/>
+    <!-- Folded corner -->
+    <path d="M162 0 L180 0 L180 18 Z" fill="#E6A055"/>
+    <path d="M162 0 L180 18 L162 18 Z" fill="#D49548"/>
+  </g>
+  
+  <!-- Front note -->
+  <g transform="translate(150, 112.5) rotate(5) translate(-90, -60)">
+    <rect width="180" height="120" rx="4" fill="#66E0B8" stroke="#55C9A3" stroke-width="3"/>
+    <!-- Folded corner -->
+    <path d="M162 0 L180 0 L180 18 Z" fill="#55C9A3"/>
+    <path d="M162 0 L180 18 L162 18 Z" fill="#4AB596"/>
+    
+    <!-- Text -->
+    <text x="90" y="70" font-family="Arial, sans-serif" font-size="26" font-weight="bold" text-anchor="middle" fill="#2C5F4F">PostIT</text>
+  </g>
+  
+  <!-- Small decorative dots -->
+  <circle cx="60" cy="45" r="3" fill="#E6A055" opacity="0.6"/>
+  <circle cx="240" cy="180" r="3" fill="#55C9A3" opacity="0.6"/>
+  <circle cx="270" cy="60" r="2" fill="#FFB366" opacity="0.5"/>
+</svg>

@@ -72,7 +72,7 @@ const updateNote = async (noteId, title, content, tagValues) => {
 // // Delete a note
 const deleteNote = async (noteId) => {
   let note = await Note.findById(noteId);
-  note = await Note.deleteOne({ _id: noteId });
+  await Note.deleteOne({ _id: noteId });
   return note;
 };
 
