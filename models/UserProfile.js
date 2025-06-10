@@ -17,7 +17,7 @@ const UserProfileSchema = new mongoose.Schema({
         message: 'Theme can only be light or dark',
       },
     },
-    primaryColor: { type: String, default: '#9b5de5' },
+    primaryColor: { type: String, default: '#7423D7' },
     fontSize: {
       type: String,
       default: '1',

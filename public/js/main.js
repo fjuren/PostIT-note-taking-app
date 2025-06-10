@@ -1,18 +1,3 @@
-// handles delete confirmation
-document.addEventListener('DOMContentLoaded', function () {
-  const deleteForms = document.querySelectorAll(
-    'form[action^="/notes/delete/"]'
-  );
-
-  deleteForms.forEach((form) => {
-    form.addEventListener('submit', function (e) {
-      if (!confirm('Are you sure you want to delete this note?')) {
-        e.preventDefault();
-      }
-    });
-  });
-});
-
 // helper for field validation
 const validationMessage = (
   fieldValue,
@@ -47,8 +32,7 @@ const validationMessage = (
   // content
   const contentField = document.getElementById('content');
   const contentValidationView = document.getElementById('content-validation');
-  console.log(titleValidationView);
-  console.log(contentValidationView);
+
   // title
   validationMessage(
     titleField,
@@ -123,18 +107,20 @@ getUniqueTags().then((tags) => {
 
 // For filtering (uses Choices library: https://github.com/Choices-js/Choices/tree/main for config)
 document.addEventListener('DOMContentLoaded', () => {
-  new Choices('#choices-multiple-remove-button', {
-    removeItemButton: true, // adds little 'x' to remove items
-    placeholderValue: 'Filter notes by category',
-    searchEnabled: true,
-  });
+  if (document.querySelector('#choices-multiple-remove-button')) {
+    new Choices('#choices-multiple-remove-button', {
+      removeItemButton: true, // adds little 'x' to remove items
+      placeholderValue: 'Filter notes by category',
+      searchEnabled: true,
+    });
+    // handles form submit each time filter option is changed
+    const form = document.getElementById('filterSearchForm');
+    const select = document.getElementById('choices-multiple-remove-button');
+    select.addEventListener('change', () => {
+      form.requestSubmit();
+    });
+  }
 
-  // handles form submit each time filter option is changed
-  const form = document.getElementById('filterSearchForm');
-  const select = document.getElementById('choices-multiple-remove-button');
-  select.addEventListener('change', () => {
-    form.requestSubmit();
-  });
 });
 
 // toggle dark mode
@@ -159,25 +145,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // handle color reset button from user preferences (display)
 document.addEventListener('DOMContentLoaded', () => {
-  const defaultColor = '#9b5de5';
+  const defaultColor = '#7423D7';
   // preview color
   const colorInput = document.getElementById('primaryColor');
   const resetButton = document.getElementById('resetColorBtn');
   // fake preview
   const colorPreviewBtn = document.getElementById('colorPreviewBtn');
 
-  resetButton.addEventListener('click', () => {
-    console.log('button clicked');
+  if (resetButton) resetButton.addEventListener('click', () => {
     colorInput.value = defaultColor;
     colorPreviewBtn.style.backgroundColor = defaultColor;
   });
 });
 
+
 // handle spinner
 const showSpinner = () => {
   // prevent spinner if form fails validation; otherwise show the spinner
-  const formValidCheck = document.querySelector('form').checkValidity();
-  formValidCheck || formValidCheck === null ? spinner.show() : null;
+  const formCheck = document.querySelector('form')
+  if (formCheck) {
+    const formValidCheck = formCheck.checkValidity();
+    formValidCheck || formValidCheck === null ? spinner.show() : null;
+  } else if (!formCheck) spinner.show()
 };
 
 const spinner = {
@@ -206,12 +195,22 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('shown.bs.modal', () => {
     spinner.hide();
   });
+
+  // Attach spinner behavior to any element with .with-spinner class
+  document.querySelectorAll('.with-spinner').forEach((el) => {
+    el.addEventListener('click', showSpinner);
+  });
+
+  // Theme toggle
+  document.querySelectorAll('.theme-toggle').forEach((el) => {
+    el.addEventListener('click', toggleTheme);
+  });
 });
 
 // handle toast
 document.addEventListener('DOMContentLoaded', () => {
   const getToast = document.getElementById('liveToast');
-  if (getToast.dataset.showToast === 'true')
+  if (getToast && getToast.dataset.showToast === 'true')
     bootstrap.Toast.getOrCreateInstance(getToast).show();
 });
 

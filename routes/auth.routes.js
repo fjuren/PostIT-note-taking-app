@@ -12,4 +12,7 @@ router.get('/auth/google/callback', authController.oauthProviderCallback);
 // Logout user
 router.get('/auth/logout', ensureAuth, authController.oauthProviderLogout);
 
+// Demo account
+router.post('/auth/demo', authController.demoAccount);
+
 module.exports = router;

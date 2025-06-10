@@ -1,24 +1,24 @@
-            <!-- Modal -->
-            <div class="modal fade" id="noteModal<%= note._id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLabel<%= note._id %>" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="modalLabel<%= note._id %>"><%= note?.title %></h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="card-text mb-3" style="white-space: pre-wrap;">
-                      <%=  note?.content %>
-                    </div>
-                    <div>
-                    <% note?.tags?.forEach(tag => { %>
-                      <span class="badge text-primary bg-primary bg-opacity-10 border-0"><%= tag %></span>
-                    <% }) %>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <!-- Modal -->
+  <div class="modal fade" id="noteModal<%= note._id %>" tabindex="-1" aria-labelledby="note-title-<%= note._id %>" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="note-title-<%= note._id %>"><%= note?.title %></h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close note modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="card-text mb-3 m-0" style="white-space: pre-wrap;" aria-label="content">
+            <p><%= note?.content %></p>
+          </div>
+          <div aria-label="Note tags">
+          <% note?.tags?.forEach(tag => { %>
+            <span class="badge text-primary bg-primary bg-opacity-10 border-0"><%= tag %></span>
+          <% }) %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

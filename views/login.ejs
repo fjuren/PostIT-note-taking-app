@@ -1,20 +1,33 @@
 <%- include('partials/header') %>
 <%- include('partials/toast') %>
 
-<div class="container">
+<section class="container" aria-labelledby="login-heading">
   <div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
-      <div class="card shadow-sm border-0 mt-5">
-        <div class="card-body p-4 text-center">
-          <h1 class="h3 text-primary mb-3">A place for your thoughts</h1>
-          <p class="lead mb-4">Create and manage your notes securely.</p>
-          <a href="/auth/google" class="btn btn-primary btn-lg" onclick="showSpinner()">
-            <i class="bi bi-google me-2"></i>Login with Google
-          </a>
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm border-0 mt-5">
+      <div class="card-body p-4 text-center">
+        <h1 id="login-heading" class="h3 text-primary mb-3">A place for your thoughts</h1>
+        <p class="lead mb-4">Create and manage your notes securely.</p>
+        
+        <a href="/auth/google" class="btn btn-primary btn-lg mb-3 with-spinner">
+          <i class="bi bi-google me-2" aria-hidden="true"></i>Login with Google
+        </a>
+        
+        <div class="position-relative my-4">
+          <hr class="text-muted">
+          <span class="position-absolute top-50 start-50 translate-middle bg-inherit px-3 text-muted small bg-body">OR</span>
         </div>
+        
+        <form action="/auth/demo" method="POST">
+          <button type="submit" class="btn btn-outline-primary btn-lg demo-btn with-spinner">
+            <i class="bi bi-play-circle me-2" aria-hidden="true"></i>Try Demo (No Signup Required)
+          </button>
+        </form>
+        
       </div>
     </div>
   </div>
 </div>
+</section>
 
 <%- include('partials/footer') %>

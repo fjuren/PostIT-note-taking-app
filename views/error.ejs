@@ -1,11 +1,11 @@
 <%- include('partials/header') %>
 
-<div class="container">
+<section class="container" aria-labelledby="error-heading">
   <div class="row justify-content-center">
     <div class="col-md-6 col-lg-5">
       <div class="card shadow-sm border-0 mt-5">
         <div class="card-body p-4 text-center">
-          <h1 class="h3 text-primary mb-3">Oops :(</h1>
+          <h1 id="error-heading" class="h3 text-primary mb-3">Oops :(</h1>
           <h3><%= message %></h3>
           <% if (!errors || errors.length === 0) { %>
             <p>Something went wrong.</p>
@@ -14,7 +14,7 @@
                 <p><%= err.message %></p>
               <% }) %>
             <% } %>
-          <a href="/" class="btn btn-primary mb-4">Home</a>
+          <a href="/" class="btn btn-primary mb-4 with-spinner">Home</a>
         </div>
       </div>
     </div>

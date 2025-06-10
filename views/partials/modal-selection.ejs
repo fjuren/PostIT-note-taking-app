@@ -1,27 +1,27 @@
 <!-- Modal -->
-<div class="modal fade" id="selectionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="selectionModal" aria-hidden="true">
+<div class="modal fade" id="selectionModal" tabindex="-1" aria-labelledby="data-download" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <form action="/user/account/export" method="POST" style="display: inline">
             <div class="modal-content">
                 <div class="modal-header">
-                <h1 class="modal-title fs-5">Select Format</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 id="data-download" class="modal-title fs-5">Select Format</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close data modal"></button>
                 </div>
                 <div class="modal-body">
-                <div class="card-text mb-3">
-                    Select between JSON, CSV or PDF formats.
-                </div>
-                <select class="form-select" name="format" aria-label="Default select JSON">
-                    <option value="json" selected>JSON</option>
-                    <option value="csv">CSV</option>
-                    <option value="pdf">PDF</option>
-                </select>
+                    <div class="card-text mb-3">
+                        Select between JSON, CSV or PDF formats.
+                    </div>
+                    <select class="form-select" name="format" aria-label="Default select JSON">
+                        <option value="json" selected>JSON</option>
+                        <option value="csv">CSV</option>
+                        <option value="pdf">PDF</option>
+                    </select>
                 </div>
                 <div class="modal-footer">
-                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#selectionModal">
-                    Download Data
-                </button>
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#selectionModal">
+                        Download Data
+                    </button>
                 </div>
             </div>
         </form>

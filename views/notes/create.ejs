@@ -1,31 +1,31 @@
 <%- include('../partials/header') %>
   
-<div class="container">
-  <h1>Create New Note</h1>
+<section class="container" aria-labelledby="create-new-note">
+  <h1 id="create-new-note">Create New Note</h1>
   <div class="card shadow-sm border-0 mb-5" id="create">
     <div class="card-body p-4">
       <form id="createNoteForm" class="needs-validation" action="/notes" method="POST" novalidate>
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title" name="title" required pattern=".*\S.*">
+          <input type="text" class="form-control" id="title" name="title" required pattern=".*\S.*" aria-describedby="title-validation">
           <div class="invalid-feedback" id="title-validation">
           </div>
         </div>
         <div class="mb-3">
           <label for="content" class="form-label">Content</label>
-          <textarea class="form-control" id="content" name="content" rows="6" required pattern=".*\S.*"></textarea>
+          <textarea class="form-control" id="content" name="content" rows="6" required pattern=".*\S.*" aria-describedby="content-validation"></textarea>
           <div class="invalid-feedback" id="content-validation">
           </div>
         </div>
         <div class="mb-3">
           <label for="input-custom-dropdown" class="form-label">Tags</label>
-          <input name="input-custom-dropdown" class="tagify--custom-dropdown form-control" placeholder="Add tags" value="">
+          <input id="input-custom-dropdown" name="input-custom-dropdown" class="tagify--custom-dropdown form-control" placeholder="Add tags to organize your notes" value="">
         </div>
-        <button type="submit" class="btn btn-primary" onclick="showSpinner(createNoteForm)">Save Note</button>
+        <button type="submit" class="btn btn-primary with-spinner">Save Note</button>
       </form>
     </div>
   </div>
-</div>
+</section>
 </div>
 
 <%- include('../partials/footer') %>

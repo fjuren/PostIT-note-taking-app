@@ -1,10 +1,10 @@
 <%- include('partials/header') %>
 
-<div class="container">
+<section class="container">
   <div class="d-flex justify-content-between">
 
     <h1>My Notes</h1>
-    <a href="/notes/create" class="btn btn-primary mb-4" onclick="showSpinner()">Create New Note</a>
+    <a href="/notes/create" class="btn btn-primary mb-4 with-spinner">Create New Note</a>
   </div>
   <div class="row mb-5">
     <% if(notes.length > 0) { %>
@@ -37,7 +37,7 @@
               </option>
               <% })%>
             </select>
-            <button hidden class="btn btn-outline-secondary" type="submit" aria-label="Submit filter" onclick="showSpinner()">
+            <button hidden class="btn btn-outline-secondary" type="submit" aria-label="Submit filter with-spinner">
               Apply filter
             </button>
           </div>
@@ -47,7 +47,7 @@
         <div class="col-md-6 col-lg-4 mb-4">
           <article class="card h-100 shadow-sm hover-shadow border-0">
             <div class="card-body">
-              <h3 class="h5 card-title"><%= note.title %></h3>
+              <strong class="card-title"><%= note.title %></strong>
               <p class="card-subtitle mb-3 text-muted small">
                 Last updated: <%= note.updatedAt %>
               </p>
@@ -62,19 +62,18 @@
             </div>
               <div class="card-footer border-0 d-flex justify-content-between align-items-center">
                 <div>
-                  <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#noteModal<%= note._id %>" onclick="showSpinner()">
+                  <button type="button" class="btn btn-sm btn-outline-primary with-spinner" data-bs-toggle="modal" data-bs-target="#noteModal<%= note._id %>">
                     View
                   </button>
-                  <a href="/notes/<%= note._id %>" class="btn btn-sm btn-outline-primary" onclick="showSpinner()">Edit</a>
+                  <a href="/notes/<%= note._id %>" class="btn btn-sm btn-outline-primary with-spinner">Edit</a>
                 </div>
-                <form action="/notes/delete/<%= note._id %>?_method=DELETE" method="POST" class="p-0">
-                  <button type="submit" class="btn btn-sm btn-outline-danger" onclick="showSpinner()">Delete</button>
-                </form>
+                <button type="button" class="btn btn-sm btn-outline-danger with-spinner" data-bs-toggle="modal" data-bs-target="#noteWarningModal<%= note._id %>">Delete</button>
               </div>
             </div>
           </article>
-
-          <!-- Modal -->
+          
+          <!-- Modals -->
+          <%- include('partials/modal-note-warning', {note}) %>
           <%- include('partials/modal-content', {note}) %>
           <% }) %>
     <% } else { %>

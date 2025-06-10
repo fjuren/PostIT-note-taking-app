@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 const session = require('express-session');
+const helmet = require('helmet');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const methodOverride = require('method-override');
@@ -16,6 +17,20 @@ require('./config/passport');
 
 // create express server
 const app = express();
+
+// added helmst for oob security-related HTTP headers
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "https://cdn.jsdelivr.net", "'unsafe-inline'"],
+        styleSrc: ["'self'", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:", "https://robohash.org", "https://lh3.googleusercontent.com",],
+      },
+    },
+  })
+);
 
 // Body parser
 app.use(express.urlencoded({ extended: false }));

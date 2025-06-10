@@ -2,11 +2,11 @@
 <%- include('../partials/toast') %>
 <%- include('../partials/modal-warning') %>
 <%- include('../partials/modal-selection') %>
-<div class="container pb-3">
-  <h1>My Account</h1>
-  <div class="card shadow-sm border-0 mb-4" id="profile-info">
+<section class="container pb-3" aria-labelledby="account">
+  <h1 id="account">My Account</h1>
+  <section class="card shadow-sm border-0 mb-4" id="profile-info" aria-labelledby="profile">
     <div class="card-body p-4">
-      <h3 class="card-title mb-3">Profile</h3>
+      <h2 id="profile" class="card-title mb-3">Profile</h2>
       <div class="row">
         <div class="col-12 col-sm-12 col-lg-6">
           <div class="mb-3">
@@ -24,12 +24,12 @@
         </div>
         <div class="col-12 col-sm-6 col-lg-6">
           <div class="mb-3">
-            <label class="form-label">Member Since</label>
+            <label for="created-at" class="form-label">Member Since</label>
             <input
               type="text"
               readonly
               class="form-control form-control-plaintext"
-              id="createdAt"
+              id="created-at"
               style="border: none; pointer-events: default; cursor: default; box-shadow: none;"
               value="<%= userWithProfile.createdAt %>"
             />
@@ -37,11 +37,11 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="card shadow-sm border-0 mb-5" id="preferences">
+  <section class="card shadow-sm border-0 mb-5" aria-labelledby="preferences">
     <div class="card-body p-4">
-      <h3 class="card-title mb-3">Preferences</h3>
+      <h2 id="preferences" class="card-title mb-3">Preferences</h2>
       <form action="/user/account/preferences?_method=PUT" method="POST">
         <div class="row">
           <div class="col-12 col-sm-12 col-md-12">
@@ -58,134 +58,140 @@
           </div>
         </div>
 
-        <h6 class="mb-3">Display Settings</h6>
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="mb-3">
-              <label for="theme" class="form-label">Theme</label>
-              <select class="form-select" id="theme" name="theme">
-                <option value="light"
-                <%- userWithProfile.userProfile?.preferences.theme == 'light' ? 'selected' : '' %>>
-                Light</option>
-                <option value="dark" 
-                <%- userWithProfile.userProfile?.preferences.theme == 'dark' ? 'selected' : '' %>
-                >Dark</option>
-              </select>
+        <section aria-labelledby="display-settings">
+          <h3 id="display-settings" class="mb-3">Display Settings</h3>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="mb-3">
+                <label for="theme" class="form-label">Theme</label>
+                <select class="form-select" id="theme" name="theme">
+                  <option value="light"
+                  <%- userWithProfile.userProfile?.preferences.theme == 'light' ? 'selected' : '' %>>
+                  Light</option>
+                  <option value="dark" 
+                  <%- userWithProfile.userProfile?.preferences.theme == 'dark' ? 'selected' : '' %>
+                  >Dark</option>
+                </select>
+              </div>
             </div>
-          </div>
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="mb-3">
-              <label for="primaryColor" class="form-label">Primary Color</label>
-              <!-- Do not delete the hidden input below. This allows the following input to work correctly, rendering the primary color correctly. There's a bizarre css conflict with Bootstrap that happening, but this hack somehow works..
-                                Added the id 'ignoreThisInput' to prevent possible errors with the form handling-->
-              <input
-                hidden
-                type="color"
-                id="ignoreThisInput"
-                value="<%- userWithProfile.userProfile?.preferences.primaryColor %>"
-              />
-              <div class="d-flex gap-2">                
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="mb-3">
+                <label for="primaryColor" class="form-label">Primary Color</label>
+                <!-- Do not delete the hidden input below. This allows the following input to work correctly, rendering the primary color correctly. There's a bizarre css conflict with Bootstrap that happening, but this hack somehow works..
+                                  Added the id 'ignoreThisInput' to prevent possible errors with the form handling-->
                 <input
+                  hidden
                   type="color"
-                  class="form-control form-control-color"
-                  id="primaryColor"
-                  name="primaryColor"
+                  id="ignoreThisInput"
                   value="<%- userWithProfile.userProfile?.preferences.primaryColor %>"
-                  />
-                  
-                  <!-- fake preview -->
-                <button type="button" class="btn" aria-disabled="true" id="colorPreviewBtn" style="pointer-events: none;">
-                  Example
-                </button>
-                <button type="button" class="btn btn-outline-primary" id="resetColorBtn">Reset Color</button>
+                />
+                <div class="d-flex gap-2">                
+                  <input
+                    type="color"
+                    class="form-control form-control-color"
+                    id="primaryColor"
+                    name="primaryColor"
+                    value="<%- userWithProfile.userProfile?.preferences.primaryColor %>"
+                    />
+                    
+                    <!-- fake preview -->
+                  <button type="button" class="btn" aria-disabled="true" id="colorPreviewBtn" style="pointer-events: none;">
+                    Example
+                  </button>
+                  <button type="button" class="btn btn-outline-primary" id="resetColorBtn">Reset Color</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="mb-3">
-              <label for="fontSize" class="form-label">Font Size</label>
-              <select
-                class="form-select"
-                id="fontSize"
-                name="fontSize"
-              >
-                <% constants.fontSizes.forEach(size => { %>
-                  <option value="<%= size.value %>" 
-                    <%- userWithProfile.userProfile?.preferences.fontSize == size.value ? 'selected' : '' %>>
-                    <%= size.label %>
-                  </option>
-                <% }); %>
-              </select>
+        <section aria-labelledby="font-settings">
+          <h3 id="font-settings" class="mb-3">Font Settings</h3>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="mb-3">
+                <label for="fontSize" class="form-label">Font Size</label>
+                <select
+                  class="form-select"
+                  id="fontSize"
+                  name="fontSize"
+                >
+                  <% constants.fontSizes.forEach(size => { %>
+                    <option value="<%= size.value %>" 
+                      <%- userWithProfile.userProfile?.preferences.fontSize == size.value ? 'selected' : '' %>>
+                      <%= size.label %>
+                    </option>
+                  <% }); %>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="mb-3">
+                <label for="fontFamily" class="form-label">Font Family</label>
+                <select class="form-select" id="fontFamily" name="fontFamily">
+                  <% constants.fontFamilies.forEach(family => { %>
+                    <option value="<%= family.value %>" 
+                      <%- userWithProfile.userProfile?.preferences.fontFamily == family.value ? 'selected' : '' %>>
+                      <%= family.label %>
+                    </option>
+                  <% }); %>
+                </select>
+              </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="mb-3">
-              <label for="fontFamily" class="form-label">Font Family</label>
-              <select class="form-select" id="fontFamily" name="fontFamily">
-                <% constants.fontFamilies.forEach(family => { %>
-                  <option value="<%= family.value %>" 
-                    <%- userWithProfile.userProfile?.preferences.fontFamily == family.value ? 'selected' : '' %>>
-                    <%= family.label %>
-                  </option>
-                <% }); %>
-              </select>
-            </div>
-          </div>
-        </div>
+        </section>
 
-        <h6 class="mb-3">Regional Settings</h6>
-        <div class="row">
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="mb-3">
-              <label for="timeZone" class="form-label">Timezone</label>
-              <select class="form-select" id="timeZone" name="timeZone">
-                  <% constants.timeZones.forEach(zone => { %>
-                    <option value="<%= zone.value %>" 
-                      <%- userWithProfile.userProfile?.preferences.timeZone == zone.value ? 'selected' : '' %>
-                      ><%= zone.label %></option>
-                  <% }); %>
-              </select>
+        <section aria-labelledby="regional-settings">
+          <h3 id="regional-settings" class="mb-3">Regional Settings</h3>
+          <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="mb-3">
+                <label for="timeZone" class="form-label">Timezone</label>
+                <select class="form-select" id="timeZone" name="timeZone">
+                    <% constants.timeZones.forEach(zone => { %>
+                      <option value="<%= zone.value %>" 
+                        <%- userWithProfile.userProfile?.preferences.timeZone == zone.value ? 'selected' : '' %>
+                        ><%= zone.label %></option>
+                    <% }); %>
+                </select>
+              </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6">
+              <div class="mb-3">
+                <label for="dateFormat" class="form-label">Date Format</label>
+                <select class="form-select" id="dateFormat" name="dateFormat">
+                    <% constants.dateFormats.forEach(format => { %>
+                      <option value="<%= format.value %>"
+                        <%- userWithProfile.userProfile?.preferences.dateFormat == format.value ? 'selected' : '' %>
+                        ><%= format.label %></option>
+                    <% }); %>
+                </select>
+              </div>
             </div>
           </div>
-          <div class="col-12 col-sm-6 col-md-6">
-            <div class="mb-3">
-              <label for="dateFormat" class="form-label">Date Format</label>
-              <select class="form-select" id="dateFormat" name="dateFormat">
-                  <% constants.dateFormats.forEach(format => { %>
-                    <option value="<%= format.value %>"
-                      <%- userWithProfile.userProfile?.preferences.dateFormat == format.value ? 'selected' : '' %>
-                      ><%= format.label %></option>
-                  <% }); %>
-              </select>
-            </div>
-          </div>
-        </div>
+        </section>
+
         <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary" onclick="showSpinner()">Save Preferences</button>
+          <button type="submit" class="btn btn-primary with-spinner">Save Preferences</button>
         </div>
       </form>
     </div>
   </div>
 
   <!-- Account (download data / delete account) -->
-  <div class="card shadow-sm border-0 mb-5" id="account">
+  <section class="card shadow-sm border-0 mb-5" id="account">
     <div class="card-body p-4">
-      <h3 class="card-title mb-3">Account</h3>
+      <h2 class="card-title mb-3">Account</h2>
       <div class="d-flex gap-2">
-        <!-- <form> -->
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#warningModal" onclick="showSpinner()">
+        <button type="button" class="btn btn-danger with-spinner" data-bs-toggle="modal" data-bs-target="#warningModal">
           Delete Account
         </button>
-          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#selectionModal" onclick="showSpinner()">
-            Download My Data
-          </button>
-        <!-- </form> -->
+        <button type="button" class="btn btn-outline-primary with-spinner" data-bs-toggle="modal" data-bs-target="#selectionModal">
+          Download My Data
+        </button>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 
 <%- include('../partials/footer') %>

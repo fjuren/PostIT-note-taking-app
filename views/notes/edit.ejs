@@ -1,34 +1,34 @@
 <%- include('../partials/header') %>
 
-<div class="container">
-  <h1 class="mb-4">Edit Note</h1>
+<section class="container" aria-labelledby="edit-note">
+  <h1 id="edit-note" class="mb-4">Edit Note</h1>
   
   <div class="card shadow-sm border-0 mb-5">
     <div class="card-body p-4">
       <form action="/notes/<%= note._id %>?_method=PUT" class="needs-validation" method="POST" novalidate>
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
-          <input type="text" class="form-control" id="title" name="title" value="<%= note.title %>" required pattern=".*\S.*">
+          <input type="text" class="form-control" id="title" name="title" value="<%= note.title %>" required pattern=".*\S.*" aria-describedby="title-validation">
           <div class="invalid-feedback" id="title-validation">
           </div>
         </div>
         <div class="mb-3">
           <label for="content" class="form-label">Content</label>
-          <textarea class="form-control" id="content" name="content" rows="10" required pattern=".*\S.*"><%= note.content %></textarea>
+          <textarea class="form-control" id="content" name="content" rows="10" required pattern=".*\S.*" aria-describedby="content-validation"><%= note.content %></textarea>
           <div class="invalid-feedback" id="content-validation">
           </div>
         </div>
         <div class="mb-3">
           <label for="input-custom-dropdown" class="form-label">Tags</label>
-          <input name="input-custom-dropdown" class="tagify--custom-dropdown form-control" placeholder="Add tags" value="<%= note.tags %>">
+          <input id="input-custom-dropdown" name="input-custom-dropdown" class="tagify--custom-dropdown form-control" placeholder="Add tags to organize your notes" value="<%= note.tags %>">
         </div>
-        <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-primary" onclick="showSpinner()">Update Note</button>
-          <a href="/notes" class="btn btn-outline-secondary" onclick="showSpinner()">Cancel</a>
+        <div class="d-flex gap-2" role="group" aria-label="Update note actions">
+          <button type="submit" class="btn btn-primary with-spinner">Update Note</button>
+          <a href="/notes" class="btn btn-outline-secondary with-spinner">Cancel</a>
         </div>
       </form>
     </div>
   </div>
-</div>
+</section>
 
 <%- include('../partials/footer') %>

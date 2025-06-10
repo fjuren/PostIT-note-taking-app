@@ -33,10 +33,11 @@ const updateUserPreferences = async (
   dateFormat
 ) => {
   const user = await User.findById(userId).populate('userProfile');
+  console.log('user :', user)
   if (!user || !user.userProfile) {
     throw new Error('User or UserProfile not found');
   }
-
+  // console.log('userprofile: ', user.userProfile)
   user.userProfile.displayName = displayName;
   user.userProfile.preferences = {
     theme,

@@ -27,8 +27,18 @@ const oauthProviderLogout = async (req, res, next) => {
   });
 };
 
+// demo account
+const demoAccount = async (req, res, next) => {
+  const user = await authService.demoAccount();
+  req.login(user, (err) => {
+    if (err) return next(err);
+    res.redirect('/dashboard');
+  }); 
+}
+
 module.exports = {
   authWithOauthProvider,
   oauthProviderCallback,
   oauthProviderLogout,
+  demoAccount
 };

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="PostIt application to keep PostIt notes!">
     <title>PostIT</title>
     <!-- favicon -->
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
@@ -46,7 +47,7 @@
         : {
           theme: 'light',
           fontSize: 1,
-          primaryColor: '#9b5de5',
+          primaryColor: '#7423D7',
           fontFamily: 'system-ui',
           timeZone: 'UTC',
           dateFormat: 'YYYY-MM-DD'
@@ -92,11 +93,17 @@
     <script src="/js/main.js" defer></script>
   </head>
   <body class="pt-4">
+    <a href="#main" class="visually-hidden-focusable" style="position: fixed; z-index: 1070; top: 4rem; left: 10px; background-color: #fff;">Skip to content</a>
     <header>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm fixed-top">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm fixed-top" aria-label="Main navigation">
         <div class="container">
-          <a class="navbar-brand" href="/" onclick="showSpinner()">
-            <h1 class="h4 m-0 text-primary">PostIT</h1>
+          <a class="navbar-brand d-flex align-items-center with-spinner" href="/" aria-label="PostIT home">
+              <img src="/assets/favicon.svg" 
+              alt="PostIt logo" 
+              class="rounded-circle me-2"
+              width="30"
+              height="30">
+              <h1 class="h4 m-0 text-primary">PostIT</h1>
           </a>
 
           <% if(typeof user !== 'undefined') { %>
@@ -104,6 +111,8 @@
             <button
             class="navbar-toggler"
             type="button"
+            aria-label="Toggle navigation hamburger button"
+            aria-expanded="false"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
           >
@@ -114,17 +123,17 @@
               <!-- only show toggle icon on desktop -->
               <li class="nav-item d-flex d-none d-sm-block">
                 <button
-                  onclick="toggleTheme()"
-                  class="btn btn-sm nav-link d-flex gap-2"
+                  class="btn btn-sm nav-link d-flex gap-2 theme-toggle"
+                  aria-label="Toggle dark/light theme"
                 >
                   <i class="bi bi-circle-half"></i>
                 </button>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/dashboard" onclick="showSpinner()">Dashboard</a>
+                <a class="nav-link with-spinner" href="/dashboard">Dashboard</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/notes" onclick="showSpinner()">Notes</a>
+                <a class="nav-link with-spinner" href="/notes">Notes</a>
               </li>
               
             <% if (user.userProfile) { %>
@@ -138,7 +147,7 @@
                 >
                   <img
                     src="<%= user.image %>"
-                    alt="<%= user.userProfile?.displayName %>"
+                    alt="profile image"
                     class="rounded-circle me-2"
                     width="30"
                     height="30"
@@ -147,10 +156,10 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                   <li>
-                    <a href="/user/account" class="dropdown-item" onclick="showSpinner()">Account</a>
+                    <a href="/user/account" class="dropdown-item with-spinner">Account</a>
                   </li>
                   <li>
-                    <a href="/auth/logout" class="dropdown-item" onclick="showSpinner()">Logout</a>
+                    <a href="/auth/logout" class="dropdown-item with-spinner">Logout</a>
                   </li>
                 </ul>
               </li>
@@ -160,8 +169,7 @@
               <!-- only show toggle icon with text on mobile -->
               <li class="nav-item d-flex d-block d-sm-none">
                 <button
-                  onclick="toggleTheme()"
-                  class="btn btn-sm nav-link d-flex gap-2"
+                  class="btn btn-sm nav-link d-flex gap-2 theme-toggle"
                 >
                   <i class="bi bi-circle-half"></i>
                   <span class="d-block d-sm-none">Toggle theme</span>
@@ -173,7 +181,7 @@
         </div>
       </nav>
     </header>
-    <main class="py-4">
+    <main id="main" class="py-4" tabindex="-1" style="outline: none; scroll-margin-top: 20px;">
       <%- include('../partials/spinner') %>
     </main>
   </body>

@@ -5,14 +5,15 @@
   --user-font-family: 'system-ui', sans-serif;
 
   /* override default bootstrap colors */
-  --color-primary: #9b5de5;
+  --color-primary: #7423D7;
   --color-primary-hover: #7a3bd4;
   --color-secondary: #14b8a6;
   --color-secondary-hover: #0f8b81;
   --color-accent: #f59e0b;
   --color-text-muted: #9ca3af;
   --color-error: #dc2626;
-  /* --bs-dropdown-font-size: var(var(--user-font-size)); */
+  --color-danger: #A61C2A;
+  --color-danger-hover: #8b1623;
 
   /* resetting choices coloring; choices is a custom library with pre-defined styling. See docs: https://github.com/Choices-js/Choices */
   --choices-bg: var(--bs-body-bg);
@@ -93,7 +94,7 @@ a {
 .btn.btn-primary {
   background-color: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
-  color: white !important;
+  color: #FFFFFF !important;
 }
 
 .btn.btn-primary:hover {
@@ -127,6 +128,17 @@ a {
   color: white !important;
 }
 
+.btn.btn-outline-primary.demo-btn:hover {
+  background-color: var(
+    --color-primary
+  ) !important; /* workaround: not adding var(--color-primary-hover) to simplify color selection preferences */
+  border-color: var(
+    --color-primary
+  ) !important; /* workaround: not adding var(--color-primary-hover) to simplify color selection preferences */
+   filter: none;
+  color: white !important;
+}
+
 .btn.btn-secondary {
   background-color: var(--color-secondary) !important;
   border-color: var(--color-secondary) !important;
@@ -137,6 +149,32 @@ a {
   background-color: var(--color-secondary-hover) !important;
   border-color: var(--color-secondary-hover) !important;
   color: white !important;
+}
+
+.btn.btn-outline-danger {
+  /* accessible color contrast against footer background */
+  color: var(--color-danger) !important;
+  border-color: var(--color-danger) !important;
+}
+
+.btn.btn-outline-danger:hover {
+  background-color: var(--color-danger) !important;
+  border-color: var(--color-danger) !important;
+  color: white !important;
+}
+
+
+/* Auto-lighten in dark mode for accessibility color contrast support*/
+[data-bs-theme='dark'] .text-primary,
+[data-bs-theme='dark'] .bg-primary,
+[data-bs-theme='dark'] .btn.btn-primary,
+[data-bs-theme='dark'] .btn.btn-primary:hover,
+[data-bs-theme='dark'] .btn.btn-outline-primary,
+[data-bs-theme='dark'] .btn.btn-outline-primary:hover,
+[data-bs-theme='dark'] .btn.btn-outline-danger,
+[data-bs-theme='dark'] .btn.btn-outline-danger:hover
+{
+  filter: brightness(1.6) saturate(0.85);
 }
 
 /* Make sure images in the navbar don't distort */
