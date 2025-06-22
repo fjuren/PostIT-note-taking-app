@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const methodOverride = require('method-override');
-const { ensureAuth, ensureGuest } = require('./middleware/auth');
+const { ensureGuest } = require('./middleware/auth');
 const errorHandler = require('./middleware/errorHandler');
 
 // enables .env vars
@@ -64,22 +64,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Routes
-app.use('/', require('./routes/auth.routes'));
+app.use('/auth', require('./routes/auth.routes'));
 app.use('/notes', require('./routes/notes.routes'));
 app.use('/user', require('./routes/user.routes'));
+app.use('/dashboard', require('./routes/dashboard.routes'));
 
 // Proceed to login screen if not already authed
 app.get('/', ensureGuest, (req, res) => {
   res.render('login', {
     user: undefined,
-    flash: req.session.flash || {}, // enables flash capability if needed in the future
-  });
-});
-
-// proceed to dashboard if authed
-app.get('/dashboard', ensureAuth, (req, res) => {
-  res.render('dashboard', {
-    user: req.user,
     flash: req.session.flash || {}, // enables flash capability if needed in the future
   });
 });

@@ -1,20 +1,129 @@
 <%- include('partials/header') %>
 
 <section class="container" aria-labelledby="dashboard-heading">
+<section class="container" aria-labelledby="dashboard-heading">
   <div class="row">
     <div class="col-12">
-      <h1 id="dashbaord-heading" class="mb-4">Welcome, <%= user.name.firstName %>!</h1>
+      <h1 id="dashboard-heading" class="mb-4">Welcome, <%= user.name.firstName %>!</h1>
 
-      <div class="card shadow-sm border-0">
+      
+      <!-- Main Dashboard Content -->
+      <div class="card shadow-sm border-0 mb-4">
         <div class="card-body p-4">
-          <h2 class="h4 mb-3">Your PostIT Dashboard</h2>
           <p class="mb-4">
             Manage your PostIT notes and create new ones from here.
           </p>
-
-          <div class="d-flex gap-2" role="group" aria-label="View or create notes">
+          <div class="d-flex gap-2 mb-4" role="group" aria-label="View or create notes">
             <a href="/notes" class="btn btn-outline-primary with-spinner">View All Notes</a>
             <a href="/notes/create" class="btn btn-primary with-spinner">Create New Note</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4">
+        <h2>You Dashboard</h2>
+      </div>
+      
+      <!-- Quick Stats Cards -->
+      <div class="row mb-4">
+        <div class="col-md-3 col-sm-6 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h2 mb-1"><%= stats.totalNotes || 0 %></h3>
+              <p class="card-text">Total Notes</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h2 mb-1"><%= stats.notesThisWeek || 0 %></h3>
+              <p class="card-text">Notes This Week</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h2 mb-1"><%= stats.longestStreak || 0 %></h3>
+              <p class="card-text">Day Streak</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <h3 class="card-title h2 mb-1"><%= stats.avgNotesPerWeek || 0 %></h3>
+              <p class="card-text">Avg/Week</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row
+      <!-- Notes by Month Chart -->
+      <div class="row mb-4">
+        <div class="mb-4">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-header">
+              <h3 class="h5 mb-0">Writing Activity</h3>
+            </div>
+            <div class="card-body">
+              <canvas id="notesOverTimeChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Most Productive Day Chart -->
+        <div class="mb-4">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-header">
+              <h3 class="h5 mb-0">Most Productive Day</h3>
+            </div>
+            <div class="card-body">
+              <canvas id="productiveDayChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Stats Row -->
+      <div class="row mb-4">
+        <!-- Tag Distribution -->
+        <div class="mb-4">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-header">
+              <h3 class="h5 mb-0">Top Tags</h3>
+            </div>
+            <div class="card-body">
+              <canvas id="topTagsChart" width="400" height="300"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Writing Stats -->
+        <div class="mb-4">
+          <div class="card shadow-sm border-0 h-100">
+            <div class="card-header">
+              <h3 class="h5 mb-0">Tag Counts</h3>
+            </div>
+            <div class="card-body">
+              <div class="row text-center">
+                <div class="col-6 mb-3">
+                  <h4 class="h3 text-info"><%= stats.totalUniqueTags || 0 %></h4>
+                  <p class="text-muted">Unique Tags</p>
+                </div>
+                <div class="col-6 mb-3">
+                  <h4 class="h3 text-warning"><%= stats.untaggedNotes || 0 %></h4>
+                  <p class="text-muted">Untagged Notes</p>
+                </div>
+              </div>
+              <div class="text-center mt-3">
+                <small class="text-muted">
+                  Last activity: <%= stats.lastActivity || 'Never' %>
+                </small>
+              </div>
+            </div>
           </div>
         </div>
       </div>

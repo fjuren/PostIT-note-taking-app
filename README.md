@@ -5,6 +5,13 @@ PostIt is a secure, server-rendered note-taking app that supports personalized u
 ## Features
 
 * **Authentication** via Google OAuth or a built-in test account for demo purposes
+* **Metric Dashboard**
+   * View various metrics and note metadata, including:
+      * Total number of notes
+      * Which day of the week is the most productive for taking notes
+      * Frequency of notes created month over month
+      * Common tags used
+      * And more
 * **User Preferences** Customize:
    * Display name
    * Default theme (light & dark mode)
@@ -41,6 +48,12 @@ The following routes are available in the PostIt application. Most endpoints are
 | GET | `/auth/google/callback` | OAuth redirect URI after login | ❌ |
 | GET | `/auth/logout` | Logs out the current user | ✅ |
 | POST | `/auth/demo` | Logs in using a temporary demo account | ❌ |
+
+### Dashboard Routes
+
+| Method | Route        | Description                                                          | Auth Required |
+|--------|--------------|----------------------------------------------------------------------|---------------|
+| GET    | `/dashboard` | Returns dashboard metrics and chart data for the logged-in user      | ✅            |
 
 ### Notes Routes
 

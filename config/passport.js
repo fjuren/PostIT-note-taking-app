@@ -69,6 +69,8 @@ passport.use(
   )
 );
 
+console.log('GOOGLE_CLIENT_ID at runtime:', process.env.GOOGLE_CLIENT_ID);
+
 // Serialize user
 passport.serializeUser((user, done) => {
   done(null, user.id);

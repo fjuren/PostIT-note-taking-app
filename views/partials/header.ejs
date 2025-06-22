@@ -17,6 +17,8 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
       rel="stylesheet"
     />
+    <!-- chart.js import -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- tagify imports -->
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
     <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
@@ -37,58 +39,63 @@
       href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
       rel="stylesheet"
     />
-<script>
-  (function () {
-    const prefs = <%- JSON.stringify(
-      typeof user !== 'undefined' &&
-      user.userProfile &&
-      user.userProfile.preferences
-        ? user.userProfile.preferences
-        : {
-          theme: 'light',
-          fontSize: 1,
-          primaryColor: '#7423D7',
-          fontFamily: 'system-ui',
-          timeZone: 'UTC',
-          dateFormat: 'YYYY-MM-DD'
-        }) %>;
+    <% if (typeof stats !== 'undefined' && stats) { %>
+      <script>
+          window.dashboardStats = <%- JSON.stringify(stats) %>;
+      </script>
+    <% } %>
+    <script>
+      (function () {
+        const prefs = <%- JSON.stringify(
+          typeof user !== 'undefined' &&
+          user.userProfile &&
+          user.userProfile.preferences
+            ? user.userProfile.preferences
+            : {
+              theme: 'light',
+              fontSize: 1,
+              primaryColor: '#7423D7',
+              fontFamily: 'system-ui',
+              timeZone: 'UTC',
+              dateFormat: 'YYYY-MM-DD'
+            }) %>;
 
-    // user preferences available locally
-    window.__USER_PREFERENCES__ = prefs;
+        // user preferences available locally
+        window.__USER_PREFERENCES__ = prefs;
 
-    const flash = <%- JSON.stringify(typeof flash !== 'undefined' ? flash : {}) %>;
+        const flash = <%- JSON.stringify(typeof flash !== 'undefined' ? flash : {}) %>;
 
-    // If user just updated preferences, sync theme immediately
-    if (flash.preferencesUpdated) {
-      const storedUserPrefTheme = '<%= 
-        typeof user !== "undefined" &&
-        user.userProfile &&
-        user.userProfile.preferences &&
-        user.userProfile.preferences.theme
-          ? user.userProfile.preferences.theme
-          : "light"
-      %>';
-      const localThemeToggle = localStorage.getItem('preferred-theme');
+        // If user just updated preferences, sync theme immediately
+        if (flash.preferencesUpdated) {
+          const storedUserPrefTheme = '<%= 
+            typeof user !== "undefined" &&
+            user.userProfile &&
+            user.userProfile.preferences &&
+            user.userProfile.preferences.theme
+              ? user.userProfile.preferences.theme
+              : "light"
+          %>';
+          const localThemeToggle = localStorage.getItem('preferred-theme');
 
-      if (localThemeToggle && localThemeToggle !== storedUserPrefTheme) {
-        localStorage.removeItem('preferred-theme');
-      }
+          if (localThemeToggle && localThemeToggle !== storedUserPrefTheme) {
+            localStorage.removeItem('preferred-theme');
+          }
 
-      document.documentElement.setAttribute('data-bs-theme', storedUserPrefTheme);
-    } else {
-      // fallback to stored preference or default
-      const localTheme = localStorage.getItem('preferred-theme');
-      const userTheme = window.__USER_PREFERENCES__.theme || 'light';
-      const finalTheme = localTheme || userTheme;
-      document.documentElement.setAttribute('data-bs-theme', finalTheme);
-    }
+          document.documentElement.setAttribute('data-bs-theme', storedUserPrefTheme);
+        } else {
+          // fallback to stored preference or default
+          const localTheme = localStorage.getItem('preferred-theme');
+          const userTheme = window.__USER_PREFERENCES__.theme || 'light';
+          const finalTheme = localTheme || userTheme;
+          document.documentElement.setAttribute('data-bs-theme', finalTheme);
+        }
 
-    // set remaining preferences!
-    document.documentElement.style.setProperty('--user-font-size', prefs.fontSize + 'rem');
-    document.documentElement.style.setProperty('--color-primary', prefs.primaryColor);
-    document.documentElement.style.setProperty('--user-font-family', prefs.fontFamily);
-  })();
-</script>
+        // set remaining preferences!
+        document.documentElement.style.setProperty('--user-font-size', prefs.fontSize + 'rem');
+        document.documentElement.style.setProperty('--color-primary', prefs.primaryColor);
+        document.documentElement.style.setProperty('--user-font-family', prefs.fontFamily);
+      })();
+    </script>
     <link rel="stylesheet" href="/css/style.css" />
     <script src="/js/main.js" defer></script>
   </head>

@@ -232,3 +232,109 @@ document.addEventListener('DOMContentLoaded', () => {
     colorInput.addEventListener('input', updateColor);
   }
 });
+
+
+// In main.js
+function initializeDashboardCharts(statsData) {
+    if (!document.getElementById('notesOverTimeChart')) return; // Only run on dashboard page
+    
+    // Notes Per Month Line Chart
+    const notesPerMonthCtx = document.getElementById('notesOverTimeChart').getContext('2d');
+    new Chart(notesPerMonthCtx, {
+        type: 'line',
+        data: {
+            labels: statsData.monthlyLabels,
+            datasets: [{
+                label: 'Notes Created',
+                data: statsData.monthlyData,
+                borderColor: '#007bff',
+                backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            }
+        }
+    });
+    
+        // Most Productive Day Bar Chart
+    const productiveDayCtx = document.getElementById('productiveDayChart').getContext('2d');
+    new Chart(productiveDayCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Notes',
+                data: statsData.dayOfWeekData, // [3, 5, 2, 8, 4, 1, 2]
+                backgroundColor: [
+                    '#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', 
+                    '#9966ff', '#ff9f40', '#ff6384'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+
+    // Tag Distribution Doughnut Chart
+    const tagDistributionCtx = document.getElementById('topTagsChart').getContext('2d');
+    new Chart(tagDistributionCtx, {
+        type: 'doughnut',
+        data: {
+            labels: statsData.topTagLabels, // ['work', 'personal', 'ideas']
+            datasets: [{
+                data: statsData.topTagData, // [15, 10, 8]
+                backgroundColor: [
+                    '#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', 
+                    '#9966ff', '#ff9f40', '#c9cbcf'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        padding: 20,
+                        usePointStyle: true
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Auto-initialize if data exists
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.dashboardStats) {
+        initializeDashboardCharts(window.dashboardStats);
+    }
+});
