@@ -3,6 +3,10 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/User');
 const UserProfile = require('../models/UserProfile');
 
+console.log('Environment check:');
+console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
+console.log('All env vars:', Object.keys(process.env).filter(key => key.includes('GOOGLE')));
+
 const handleGoogleLogin = async (accessToken, refreshToken, profile, done) => {
       try {
         let user = await User.findOne({ googleId: profile.id });
