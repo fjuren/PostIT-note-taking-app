@@ -2,6 +2,9 @@
   "name": "postit",
   "author": "Fabian Juren",
   "version": "1.0.0",
+  "engines": {
+    "node": "20.x"
+  },
   "description": "A note-taking web app called 'PostIt'",
   "main": "app.js",
   "scripts": {
