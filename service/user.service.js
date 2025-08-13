@@ -33,7 +33,6 @@ const updateUserPreferences = async (
   dateFormat
 ) => {
   const user = await User.findById(userId).populate('userProfile');
-  console.log('user :', user)
   if (!user || !user.userProfile) {
     throw new Error('User or UserProfile not found');
   }

@@ -96,7 +96,6 @@ const exportUserData = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const formatType = req.body.format;
-    console.log('formatType', formatType);
     // get add related user data as exported file
     const userDataExport = await userService.exportUserData(userId);
 
