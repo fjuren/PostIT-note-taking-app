@@ -26,6 +26,14 @@ jobs:
       run: npm ci
 
     - name: Run tests
+      env:
+        GOOGLE_CALLBACK_URL: ${{ secrets.GOOGLE_CALLBACK_URL}}
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID}}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET}}
+        MONGODB_URI: ${{ secrets.MONGODB_URI}}
+        NODE_ENV: ${{ secrets.NODE_ENV}}
+        PORT: ${{ secrets.PORT}}
+        SESSION_SECRET: ${{ secrets.SESSION_SECRET}}
       run: npm test
 
 # ----
