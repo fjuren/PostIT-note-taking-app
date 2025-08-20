@@ -18,6 +18,7 @@ jobs:
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID}}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET}}
       MONGODB_URI: ${{ secrets.MONGODB_URI}}
+      MONGODB_TEST_URI: ${{ secrets.MONGODB_TEST_URI}}
       NODE_ENV: ${{ secrets.NODE_ENV}}
       PORT: ${{ secrets.PORT}}
       SESSION_SECRET: ${{ secrets.SESSION_SECRET}}
